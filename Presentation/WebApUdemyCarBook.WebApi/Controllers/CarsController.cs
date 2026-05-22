@@ -14,9 +14,10 @@ namespace WebApUdemyCarBook.WebApi.Controllers
         private readonly CreateCarCommandHandler _createCarCommandHandler;
         private readonly UpdateCarCommandHandler _updateCarCommandHandler;
         private readonly RemoveCarCommandHandler _removeCarCommandHandler;
-        private readonly GetCarWithBrandQueryHandler _getCarWithBrandQueryHandler;
+        private readonly GetCarWithBrandQueryHandler _getCarWithBrandQueryHandler;  
+        private readonly GetLast5CarsWithBrandQueryHandler _getLast5CarsWithBrandsQueryHandler; // Yeni handler eklendi
 
-        public CarsController(GetCarQueryHandler getCarQueryHandler, GetCarByIdQueryHandler getCarByIdQueryHandler, CreateCarCommandHandler createCarCommandHandler, UpdateCarCommandHandler updateCarCommandHandler, RemoveCarCommandHandler removeCarCommandHandler, GetCarWithBrandQueryHandler getCarWithBrandQueryHandler = null)
+        public CarsController(GetCarQueryHandler getCarQueryHandler, GetCarByIdQueryHandler getCarByIdQueryHandler, CreateCarCommandHandler createCarCommandHandler, UpdateCarCommandHandler updateCarCommandHandler, RemoveCarCommandHandler removeCarCommandHandler, GetCarWithBrandQueryHandler getCarWithBrandQueryHandler = null, GetLast5CarsWithBrandQueryHandler getLast5CarsWithBrandsQueryHandler = null)
         {
             _getCarQueryHandler = getCarQueryHandler;
             _getCarByIdQueryHandler = getCarByIdQueryHandler;
@@ -24,6 +25,7 @@ namespace WebApUdemyCarBook.WebApi.Controllers
             _updateCarCommandHandler = updateCarCommandHandler;
             _removeCarCommandHandler = removeCarCommandHandler;
             _getCarWithBrandQueryHandler = getCarWithBrandQueryHandler;
+            _getLast5CarsWithBrandsQueryHandler = getLast5CarsWithBrandsQueryHandler;
         }
 
         // Adres: api/Cars
@@ -80,6 +82,12 @@ namespace WebApUdemyCarBook.WebApi.Controllers
         {
             await _updateCarCommandHandler.Handle(command);
             return Ok("Araba bilgisi güncellendi");
+        }
+        [HttpGet("GetLast5CarsWithBrands")] // Yeni endpoint eklendi
+        public IActionResult GetLast5CarsWithBrands()
+        {
+            var values = _getLast5CarsWithBrandsQueryHandler.Handle();
+            return Ok(values);
         }
     }
 }
