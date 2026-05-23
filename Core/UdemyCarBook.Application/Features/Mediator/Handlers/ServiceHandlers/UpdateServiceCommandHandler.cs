@@ -11,11 +11,11 @@ using UdemyCarBookDomain.Entities;
 
 namespace UdemyCarBook.Application.Features.Mediator.Handlers.ServiceHandlers
 {
-    public class UpdateSocialMediaCommandHandler : IRequestHandler<UpdateServiceCommands     >
+    public class UpdateBlogCommandHandler : IRequestHandler<UpdateServiceCommands     >
     {
         private readonly IRepository<Service> _repository;
 
-        public UpdateSocialMediaCommandHandler(IRepository<Service> repository)
+        public UpdateBlogCommandHandler(IRepository<Service> repository)
         {
             _repository = repository;
         }

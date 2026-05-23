@@ -4,32 +4,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UdemyCarBook.Application.Features.Mediator.Queries.AuthorQueries;
 using UdemyCarBook.Application.Features.Mediator.Queries.LocationQueries;
 using UdemyCarBook.Application.Features.Mediator.Queries.ServiceQueries;
+using UdemyCarBook.Application.Features.Mediator.Results.AuthorResults;
 using UdemyCarBook.Application.Features.Mediator.Results.LocationResults;
 using UdemyCarBook.Application.Features.Mediator.Results.ServiceResult;
 using UdemyCarBook.Application.Interfaces;
 using UdemyCarBookDomain.Entities;
 
-namespace UdemyCarBook.Application.Features.Mediator.Handlers.ServiceHandlers
+namespace UdemyCarBook.Application.Features.Mediator.Handlers.AuthorHandlers
 {
-    public class GetBlogQueryHandler : IRequestHandler<GetServiceQuery, List<GetServiceQueryResult>>
+    public class GetAuthorQueryHandler : IRequestHandler<GetAuthorQuery, List<GetAuthorQueryResult>>
     {
-        private readonly IRepository<Service> _repository;
-        public GetBlogQueryHandler(IRepository<Service> repository)
+        private readonly IRepository<Author> _repository;
+        public GetAuthorQueryHandler(IRepository<Author> repository)
         {
             _repository = repository;
         }
 
-        public Task<List<GetServiceQueryResult>> Handle(GetServiceQuery  request, CancellationToken cancellationToken)
+        public Task<List<GetAuthorQueryResult>> Handle(GetAuthorQuery     request, CancellationToken cancellationToken)
         {
             var values = _repository.GetAllAsync().Result;
-            return Task.FromResult(values.Select(l => new GetServiceQueryResult
+            return Task.FromResult(values.Select(l => new GetAuthorQueryResult
             {
-                 ServiceID = l.ServiceID,   
-                    Title = l.Title,
+                 Id = l.Id,   
+                    Name = l.Name,
                     Description = l.Description,
-                    IconUrl = l.IconUrl
+                    ImageUrl = l.ImageUrl
             }).ToList());
         }
         
