@@ -15,8 +15,7 @@ namespace WebApUdemyCarBook.WebApi.Controllers
         private readonly UpdateCarCommandHandler _updateCarCommandHandler;
         private readonly RemoveCarCommandHandler _removeCarCommandHandler;
         private readonly GetCarWithBrandQueryHandler _getCarWithBrandQueryHandler;  
-        private readonly GetLast5CarsWithBrandQueryHandler _getLast5CarsWithBrandsQueryHandler; // Yeni handler eklendi
-
+        private readonly GetLast5CarsWithBrandQueryHandler _getLast5CarsWithBrandsQueryHandler;
         public CarsController(GetCarQueryHandler getCarQueryHandler, GetCarByIdQueryHandler getCarByIdQueryHandler, CreateCarCommandHandler createCarCommandHandler, UpdateCarCommandHandler updateCarCommandHandler, RemoveCarCommandHandler removeCarCommandHandler, GetCarWithBrandQueryHandler getCarWithBrandQueryHandler = null, GetLast5CarsWithBrandQueryHandler getLast5CarsWithBrandsQueryHandler = null)
         {
             _getCarQueryHandler = getCarQueryHandler;
@@ -83,11 +82,12 @@ namespace WebApUdemyCarBook.WebApi.Controllers
             await _updateCarCommandHandler.Handle(command);
             return Ok("Araba bilgisi güncellendi");
         }
-        [HttpGet("GetLast5CarsWithBrands")] // Yeni endpoint eklendi
+        [HttpGet("GetLast5CarsWithBrands")]
         public IActionResult GetLast5CarsWithBrands()
         {
             var values = _getLast5CarsWithBrandsQueryHandler.Handle();
             return Ok(values);
         }
+       
     }
 }

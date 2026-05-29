@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using UdemyCarBook.Dto.CarDtos;
+using UdemyCarBook.Dto.CarPricingDtos;
 
 namespace UdemyCarBook.WebUI.Controllers
 {
@@ -15,12 +16,14 @@ namespace UdemyCarBook.WebUI.Controllers
 
         public async Task<IActionResult>Index()
         {
-                var client = _httpClientFactory.CreateClient();
-                var responseMessage = await client.GetAsync("https://localhost:7087/api/Cars/GetCarWithBrand");
+            ViewBag.v1 = "Araçlarımız";
+            ViewBag.v2 = "Araçlarınızı Seçiniz";
+            var client = _httpClientFactory.CreateClient();
+                var responseMessage = await client.GetAsync("https://localhost:7087/api/CarPricing");
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     var jsonData = await responseMessage.Content.ReadAsStringAsync();
-                    var values = JsonSerializer.Deserialize<List<ResultCarDto>>(jsonData, new JsonSerializerOptions
+                    var values = JsonSerializer.Deserialize<List<ResultCarPricingDto>>(jsonData, new JsonSerializerOptions
                     {
                         PropertyNameCaseInsensitive = true
                     });
