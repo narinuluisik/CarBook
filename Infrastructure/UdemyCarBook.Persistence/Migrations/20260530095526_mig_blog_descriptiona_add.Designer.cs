@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UdemyCarBook.Persistence.Context;
 
@@ -11,9 +12,11 @@ using UdemyCarBook.Persistence.Context;
 namespace UdemyCarBook.Persistence.Migrations
 {
     [DbContext(typeof(CarBookContext))]
-    partial class CarBookContextModelSnapshot : ModelSnapshot
+    [Migration("20260530095526_mig_blog_descriptiona_add")]
+    partial class mig_blog_descriptiona_add
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -455,28 +458,6 @@ namespace UdemyCarBook.Persistence.Migrations
                     b.ToTable("SocialMedias");
                 });
 
-            modelBuilder.Entity("UdemyCarBookDomain.Entities.TagCloud", b =>
-                {
-                    b.Property<int>("TagCloudID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TagCloudID"));
-
-                    b.Property<int>("BlogID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("TagCloudID");
-
-                    b.HasIndex("BlogID");
-
-                    b.ToTable("TagClouds");
-                });
-
             modelBuilder.Entity("UdemyCarBookDomain.Entities.Testimonial", b =>
                 {
                     b.Property<int>("TestimonialID")
@@ -585,25 +566,9 @@ namespace UdemyCarBook.Persistence.Migrations
                     b.Navigation("Pricing");
                 });
 
-            modelBuilder.Entity("UdemyCarBookDomain.Entities.TagCloud", b =>
-                {
-                    b.HasOne("UdemyCarBookDomain.Entities.Blog", "Blog")
-                        .WithMany("TagClouds")
-                        .HasForeignKey("BlogID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Blog");
-                });
-
             modelBuilder.Entity("UdemyCarBookDomain.Entities.Author", b =>
                 {
                     b.Navigation("Blogs");
-                });
-
-            modelBuilder.Entity("UdemyCarBookDomain.Entities.Blog", b =>
-                {
-                    b.Navigation("TagClouds");
                 });
 
             modelBuilder.Entity("UdemyCarBookDomain.Entities.Brand", b =>
