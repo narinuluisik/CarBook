@@ -32,7 +32,10 @@ namespace UdemyCarBook.Application.Features.Mediator.Handlers.BlogHandlers
                 AuthorID = blog.AuthorID,
                 CoverImageUrl = blog.CoverImageUrl,
                 CreatedDate = blog.CreatedDate,
-                CategoryID = blog.CategoryID
+                CategoryID = blog.CategoryID    ,
+                    AuthorDescription = blog.Author.Description,
+                    AuthorImageUrl = blog.Author.ImageUrl,
+
             }).ToList();
 
             return await Task.FromResult(result);

@@ -48,5 +48,11 @@ namespace WebApUdemyCarBook.WebApi.Controllers
             await _mediator.Send(command);
             return Ok("Tag Cloud bilgisi güncellendi");
         }
+        [HttpGet("GetTagCloudByBlogId")]
+        public async Task<IActionResult> GetTagCloudByBlogId(int id)
+        {
+            var result = await _mediator.Send(new GetTagCloudByBlogIdQuery(id));
+            return Ok(result);
+        }
     }
 }

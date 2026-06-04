@@ -36,11 +36,18 @@ namespace WebApUdemyCarBook.WebApi.Controllers
             await _meditor.Send(command);
             return Ok("Özellik bilgisi eklendi");
         }
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> RemoveFeature(int id)
         {
             await _meditor.Send(new RemoveFeatureCommand(id));
             return Ok("Özellik bilgisi silindi");
+        }
+        
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateFeature(UpdateFeatureCommand command)
+        {
+            await _meditor.Send(command);
+            return Ok("Özellik bilgisi güncellendi");
         }
     }
 

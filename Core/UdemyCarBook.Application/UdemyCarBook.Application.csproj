@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="Features\Mediator\Results\TagCloudResults\GetTagCloudByBlogIdQueryResult.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\UdemyCarBookDomain\UdemyCarBookDomain.csproj" />
   </ItemGroup>
 

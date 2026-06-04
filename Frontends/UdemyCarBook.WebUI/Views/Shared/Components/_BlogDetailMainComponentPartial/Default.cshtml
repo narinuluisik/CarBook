@@ -2,8 +2,8 @@
 <div class="col-md-8 ftco-animate">
     <h2 class="mb-3">@Model.Title</h2>
     <p>@Model.Description</p>
-    @await Component.InvokeAsync("_BlogDetailCloudTagBlogComponentPartial")
-    @await Component.InvokeAsync("_BlodDetailAuthorAboutComponentPartial")
+    @await Component.InvokeAsync("_BlogDetailCloudTagBlogComponentPartial", new { id = Model.BlogID })
+    @await Component.InvokeAsync("_BlodDetailAuthorAboutComponentPartial", new { id = Model.AuthorID })
 
     <div class="pt-5 mt-5">
         <h3 class="mb-5">6 Yorumlar</h3>

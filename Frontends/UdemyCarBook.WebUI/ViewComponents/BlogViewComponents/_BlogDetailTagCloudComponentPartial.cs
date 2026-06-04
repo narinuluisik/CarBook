@@ -17,12 +17,13 @@ namespace UdemyCarBook.WebUI.ViewComponents.BlogViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync(int id)
         {
+            ViewBag.BlogID = id;
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync($"https://localhost:7087/api/TagClouds/ " + id);
+            var responseMessage = await client.GetAsync($"https://localhost:7087/api/TagCloud/GetTagCloudByBlogId?id={id}");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
-                var blog = JsonSerializer.Deserialize<GetByIdTagCloudDto>(jsonData, new JsonSerializerOptions
+                var blog = JsonSerializer.Deserialize<List<GetByIdTagCloudDto>>(jsonData, new JsonSerializerOptions
                 {
                     PropertyNameCaseInsensitive = true
                 });

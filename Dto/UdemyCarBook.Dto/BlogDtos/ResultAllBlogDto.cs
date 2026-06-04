@@ -17,6 +17,8 @@ namespace UdemyCarBook.Dto.BlogDtos
          public string CoverImageUrl { get; set; }
        public DateTime CreatedDate { get; set; }
         public string Description { get; set; }
+        public string AuthorImageUrl { get; set; }
+        public string AuthorDescription { get; set; }
 
     }
 }
