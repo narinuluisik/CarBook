@@ -43,17 +43,19 @@ namespace WebApUdemyCarBook.WebApi.Controllers
             return Ok("Hakkımda bilgisi eklendi");
 
         }     
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> RemoveAbout(int id)
         {
             await _removeAboutCommandHandler.Handle(new RemoveAboutCommand(id));
             return Ok("Hakkımda bilgisi silindi");
         }
-        [HttpPut]
-        public async Task<IActionResult> UpdateAbout(UpdateAboutCommand command)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateAbout(int id, UpdateAboutCommand command)
         {
+            command.AboutID = id;
+
             await _updateAboutCommandHandler.Handle(command);
             return Ok("Hakkımda bilgisi güncellendi");
         }
-}
+    }
 }

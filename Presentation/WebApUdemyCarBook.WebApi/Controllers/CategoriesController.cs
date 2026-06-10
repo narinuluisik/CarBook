@@ -42,13 +42,13 @@ namespace WebApUdemyCarBook.WebApi.Controllers
             await _createCategoryCommandHandler.Handle(command);
             return Ok("Kategori bilgisi eklendi");
         }
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> RemoveCategory(int id)
         {
             await _removeCategoryCommandHandler.Handle(new RemoveCategoryCommand(id));
             return Ok("Kategori bilgisi silindi");
         }
-        [HttpPut]
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdateCategory(UpdateCategoryCommand command)
         {
             await _updateCategoryCommandHandler.Handle(command);

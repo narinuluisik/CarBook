@@ -1,0 +1,53 @@
+﻿@model CreateAuthorDto
+@{
+    ViewData["Title"] = "CreateAuthor";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+
+
+
+<div class="page-content">
+    <div class="container-fluid">
+
+
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-body">
+
+                        <h4 class="card-title">Yeni Yazar Bilgisi Girişi</h4>
+                        <p class="card-subtitle mb-4">Yazar bilgilerini eksiksiz giriniz</p>
+
+                        <form method="post">
+
+                            <div class="form-group">
+                                <label for="exampleInputName">Ad Soyad</label>
+                                <input type="text" class="form-control" id="exampleInputName" asp-for="Name" placeholder="Yazar Adını girin">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputDescription">Açıklama </label>
+                                <input type="text" class="form-control" id="exampleInputDescription" asp-for="Description" placeholder="Açıklama girin">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputVideoUrl">Görsel</label>
+                                <input type="text" class="form-control" id="exampleInputVideoUrl" asp-for="ImageUrl" placeholder="Yazar Görsel girin">
+                            </div>
+
+
+                            <button type="submit" class="btn btn-primary waves-effect waves-light">Kaydet</button>
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+

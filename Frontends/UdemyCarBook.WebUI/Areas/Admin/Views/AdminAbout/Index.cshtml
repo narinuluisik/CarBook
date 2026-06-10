@@ -1,13 +1,10 @@
-﻿@using UdemyCarBook.Dto.BannerDtos
-@model List<ResultBannerDto>
-
+﻿@using UdemyCarBook.Dto.AboutDtos
+@model List<ResultAboutDto>
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/AdminLayout/Index.cshtml";
-
 }
-
 <div class="page-content">
     <div class="container-fluid">
 
@@ -16,9 +13,9 @@
             <div class="col-xl-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Ana Sayfa Banner Alanı</h4>
+                        <h4 class="card-title">Hakkında Alanı</h4>
                         <p class="card-subtitle mb-4">
-                            Ana Sayfanın Banner Alanı ekleme silme güncelleme işlemlerinizi yapabilrsiniz
+                          About Alanı ekleme silme güncelleme işlemlerinizi yapabilrsiniz
 
                         </p>
                         <div class="table-responsive">
@@ -28,8 +25,8 @@
                                         <th>#</th>
                                         <th>Başlık</th>
                                         <th>Açıklama</th>
-                                        <th>Video URL</th>
-                                        <th>Video Açıklama</th>
+                                        <th>Görsel</th>
+                                       
                                         <th>Sil</th>
                                         <th>Güncelle</th>
                                         <th>Markaya Ait Araçlar</th>
@@ -40,19 +37,18 @@
                                     @foreach (var item in Model)
                                     {
                                         <tr>
-                                            <td>@item.Title</td>
-                                            <td>@item.Description</td>
-                                            <td>@item.VideoUrl</td>
-                                            <td>@item.VideoDescription</td>
+                                            <td>@item.title</td>
+                                            <td>@item.description</td>
+                                            <td>@item.imageUrl</td>
+                                          
 
-                                            <td><a href="/Admin/AdminBanner/RemoveBanner/@item.BannerID" class="btn btn-outline-danger">Sil</a></td>
-                                            <td><a href="/Admin/AdminBanner/UpdateBanner/@item.BannerID" class="btn btn-outline-success">Güncelle</a></td>
-                                            <td><a href="/Admin/AdminBanner/UpdateBanner/@item.BannerID" class="btn btn-outline-success"> Youtubeda aç</a></td>
+                                            <td><a href="/Admin/AdminAbout/RemoveAbout/@item.aboutID" class="btn btn-outline-danger">Sil</a></td>
+                                            <td><a href="/Admin/AdminAbout/UpdateAbout/@item.aboutID" class="btn btn-outline-success">Güncelle</a></td>
                                         </tr>
                                     }
                                 </tbody>
                             </table>
-                            <td><a href="/Admin/AdminBanner/CreateBanner" class="btn btn-outline-primary">Yeni Banner Girişi</a></td>
+                            <td><a href="/Admin/AdminAbout/CreateAbout" class="btn btn-outline-primary">Yeni Hakkında Girişi</a></td>
 
                         </div>
 
