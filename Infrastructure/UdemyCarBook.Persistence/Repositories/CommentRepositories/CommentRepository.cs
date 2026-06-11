@@ -12,6 +12,10 @@ namespace UdemyCarBook.Persistence.Repositories.CommentRepositories
     public class CommentRepository<T> : IGenericRepository<Comment>
     {
        private readonly CarBookContext _carBookContext;
+        public CommentRepository(CarBookContext carBookContext)
+        {
+            _carBookContext = carBookContext;
+        }
         public void Create(Comment entity)
         {
           _carBookContext.Comments.Add(entity);
@@ -50,6 +54,12 @@ namespace UdemyCarBook.Persistence.Repositories.CommentRepositories
         {
           _carBookContext.Comments.Update(entity);
             _carBookContext.SaveChanges();
+        }
+
+      public  List<Comment> GetCommentsByBlogId(int id)
+        {
+            return _carBookContext.Set<Comment>().Where(x=> x.BlogID == id).ToList();
+
         }
     }
 }

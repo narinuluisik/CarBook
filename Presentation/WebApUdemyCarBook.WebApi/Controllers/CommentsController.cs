@@ -49,6 +49,12 @@ namespace WebApUdemyCarBook.WebApi.Controllers
             _repository.Update(comment);
             return Ok("Yorum bilgisi güncellendi");
         }
+        [HttpGet("CommentListByBlog")]
+        public IActionResult CommentListByBlog(int id)
+        {
+            var comment = _repository.GetCommentsByBlogId(id);
+            return Ok(comment);
+        }
 
     }
 }
