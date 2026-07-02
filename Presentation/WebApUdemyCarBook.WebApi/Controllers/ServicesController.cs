@@ -34,13 +34,14 @@ namespace WebApUdemyCarBook.WebApi.Controllers
                 await _meditor.Send(command);
                 return Ok("Hizmet bilgisi eklendi");
         }
-            [HttpDelete]
+            [HttpDelete("{id}")]
             public async Task<IActionResult> Delete(int id)
             {
                 await _meditor.Send(new RemoveServiceCommands(id));
                 return Ok("Hizmet bilgisi silindi");
         }
-        [HttpPut]
+
+        [HttpPut("{id}")]
         public async Task<IActionResult> Put(UpdateServiceCommands command)
         {
             await _meditor.Send(command);

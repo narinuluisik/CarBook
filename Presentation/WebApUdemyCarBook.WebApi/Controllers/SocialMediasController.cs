@@ -34,13 +34,13 @@ namespace WebApUdemyCarBook.WebApi.Controllers
             await _meditor.Send(command);
             return Ok("Sosyal medya bilgisi eklendi");
         }
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> RemoveSocialMedia(int id)
         {
             await _meditor.Send(new RemoveSocialMediaCommands(id));
             return Ok("Sosyal medya bilgisi silindi");
         }
-        [HttpPut]
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdateSocialMedia(UpdateSocialMediaCommands command)
         {
             await _meditor.Send(command);

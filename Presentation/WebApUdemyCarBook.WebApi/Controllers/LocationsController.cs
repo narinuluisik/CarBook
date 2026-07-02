@@ -20,7 +20,7 @@ namespace WebApUdemyCarBook.WebApi.Controllers
         public async Task<IActionResult> LocationList()
         {
             var values = await _meditor.Send(new GetLocationQuery());
-            return Ok();
+            return Ok(values);
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetLocation(int id)
@@ -36,13 +36,13 @@ namespace WebApUdemyCarBook.WebApi.Controllers
             await _meditor.Send(command);
             return Ok("Konum bilgisi eklendi");
         }
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> RemoveLocation(int id)
         {
             await _meditor.Send(new RemoveLocationCommand(id));
             return Ok("Konum bilgisi silindi");
         }
-        [HttpPut]
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdateLocation(UpdateLocationCommand command)
         {
             await _meditor.Send(command);

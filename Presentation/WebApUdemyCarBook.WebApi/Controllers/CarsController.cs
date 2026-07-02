@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using UdemyCarBook.Application.Features.CQRS.Commands.CarCommands;
 using UdemyCarBook.Application.Features.CQRS.Handlers.CarHandlers;
 using UdemyCarBook.Application.Features.CQRS.Queries.CarQueries;
+using UdemyCarBook.Application.Features.Mediator.Queries.StatisticQueries;
 
 namespace WebApUdemyCarBook.WebApi.Controllers
 {
@@ -16,6 +18,8 @@ namespace WebApUdemyCarBook.WebApi.Controllers
         private readonly RemoveCarCommandHandler _removeCarCommandHandler;
         private readonly GetCarWithBrandQueryHandler _getCarWithBrandQueryHandler;  
         private readonly GetLast5CarsWithBrandQueryHandler _getLast5CarsWithBrandsQueryHandler;
+    
+
         public CarsController(GetCarQueryHandler getCarQueryHandler, GetCarByIdQueryHandler getCarByIdQueryHandler, CreateCarCommandHandler createCarCommandHandler, UpdateCarCommandHandler updateCarCommandHandler, RemoveCarCommandHandler removeCarCommandHandler, GetCarWithBrandQueryHandler getCarWithBrandQueryHandler = null, GetLast5CarsWithBrandQueryHandler getLast5CarsWithBrandsQueryHandler = null)
         {
             _getCarQueryHandler = getCarQueryHandler;
@@ -88,6 +92,7 @@ namespace WebApUdemyCarBook.WebApi.Controllers
             var values = _getLast5CarsWithBrandsQueryHandler.Handle();
             return Ok(values);
         }
+      
        
     }
 }

@@ -35,13 +35,13 @@ namespace WebApUdemyCarBook.WebApi.Controllers
             await _meditor.Send(command);
             return Ok("Footer adres bilgisi eklendi");
         }
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> RemoveFooterAdresses(int id)
         {
             await _meditor.Send(new RemoveFooterAdressCommand(id));
             return Ok("Footer adres bilgisi silindi");
         }
-        [HttpPut]
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdateFooterAdresses(UpdateFooterAdressCommand command)
         {
             await _meditor.Send(command);

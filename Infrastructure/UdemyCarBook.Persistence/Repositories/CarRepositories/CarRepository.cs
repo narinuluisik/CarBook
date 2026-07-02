@@ -24,7 +24,11 @@ namespace UdemyCarBook.Persistence.Repositories.CarRepositories
             return value;
         }
 
-  
+       public int GetCarCount()
+        {
+           var value = _context.Cars.Count();
+            return value;
+        }
 
         List<Car> ICarRepository.GetLast5CarsWithBrands()
         {
