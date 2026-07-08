@@ -1,0 +1,48 @@
+﻿@model List<FilterRentACarDto>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/UILayout/Index.cshtml";
+}
+@if (ViewBag.HataMesaji != null)
+{
+    <div class="alert alert-danger">@ViewBag.HataMesaji</div>
+}
+@if (ViewBag.HamJsonVerisi != null)
+{
+    <div class="alert alert-info">@ViewBag.HamJsonVerisi</div>
+    <div class="alert alert-warning">Mevcut ID: @ViewBag.locationID</div>
+}
+
+<section class="ftco-section bg-light">
+    <div class="container">
+        <div class="row">
+            @if (Model != null && Model.Count > 0)
+            {
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-4">
+                        <div class="car-wrap rounded ftco-animate">
+                            <div class="img rounded d-flex align-items-end" style="background-image: url(@item.CoverImageUrl);">
+                            </div>
+                            <div class="text">
+                                <h2 class="mb-0"><a href="car-single.html">@item.Model</a></h2>
+                                <div class="d-flex mb-3">
+                                    <span class="cat">@item.Brand</span>
+                                    <p class="price ml-auto">000<span>/Günlük</span></p>
+                                </div>
+                                <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Hemen Kirala</a> <a href="car-single.html" class="btn btn-secondary py-2 ml-1">Detaylar</a></p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-md-12 text-center">
+                    <div class="alert alert-warning">Seçtiğiniz lokasyonda şu an kiralık araç bulunmamaktadır.</div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
