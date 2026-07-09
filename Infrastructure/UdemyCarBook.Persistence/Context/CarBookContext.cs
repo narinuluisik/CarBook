@@ -14,7 +14,7 @@ namespace UdemyCarBook.Persistence.Context
         {
             optionsBuilder.UseSqlServer("Server=NARIN\\SQLEXPRESS;initial Catalog=UdemyCarBookDb;integrated Security=true; TrustServerCertificate=true;");
         }
-        public DbSet<About>Abouts { get; set; }
+        public DbSet<About> Abouts { get; set; }
         public DbSet<Banner> Banners { get; set; }
         public DbSet<Car> Cars { get; set; }
         public DbSet<CarDescription> CarDescriptions { get; set; }
@@ -37,6 +37,23 @@ namespace UdemyCarBook.Persistence.Context
         public DbSet<RentACar> RentACars { get; set; }
         public DbSet<RentACarProcess> RentACarProcesses { get; set; }
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<Reservation> Reservations { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+
+
+            modelBuilder.Entity<Reservation>()
+                .HasOne(r => r.PickUpLocation)
+                .WithMany(l => l.PickUpLocation)
+                .HasForeignKey(r => r.PickUpLocationID)
+                .OnDelete(DeleteBehavior.ClientSetNull); // Prevent cascading delete
+
+            modelBuilder.Entity<Reservation>()
+                .HasOne(r => r.DropOffLocation)
+                .WithMany(l => l.DropOffLocation)
+                .HasForeignKey(r => r.DropOffLocationID)
+                .OnDelete(DeleteBehavior.ClientSetNull); // Prevent cascading delete
         }
+    }
 }
