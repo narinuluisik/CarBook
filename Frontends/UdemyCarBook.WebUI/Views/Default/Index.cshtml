@@ -3,6 +3,11 @@
     ViewData["Title"] = "Index";
     Layout = null;
 }
+<style>
+    #drop option{
+        color:black;
+    }
+</style>
 
 
 @await Component.InvokeAsync("_HeadUILayoutComponentPartial")
@@ -26,26 +31,26 @@
                                 <h2>Şimdi Aracınızı Kiralayın</h2>
                                 <div class="form-group">
                                     <label for="" class="label">Alınacak Lokasyon</label>
-                                    @Html.DropDownListFor(x => x.LocationID, (List<SelectListItem>)ViewBag.v, new { @class = "form-control" })
+                                    @Html.DropDownListFor(x => x.LocationID, (List<SelectListItem>)ViewBag.v, new { @class = "form-control",@id="drop" })
                                 </div>
 
                                 <div class="d-flex">
                                     <div class="form-group mr-2">
                                         <label for="" class="label">Alınmak İstenen Tarih</label>
-                                        <input type="text" class="form-control" id="book_pick_date" name="book_pick_date" placeholder="Date">
+                                        <input type="text" class="form-control" id="book_pick_date" name="book_pick_date" placeholder="Tarih Seçin">
                                     </div>
                                     <div class="form-group ml-2">
                                         <label for="" class="label">İade Tarihi</label>
-                                        <input type="text" class="form-control" id="book_off_date" name="book_off_date" placeholder="Date">
+                                        <input type="text" class="form-control" id="book_off_date" name="book_off_date" placeholder="Tarih Seçin">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="label">Alış Saati</label>
-                                    <input type="text" class="form-control" id="time_pick" name="time_pick" placeholder="Time">
+                                    <input type="text" class="form-control" id="time_pick" name="time_pick" placeholder="Saat Seçin">
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="label">İade Saati</label>
-                                    <input type="text" class="form-control" id="time_off" name="time_off" placeholder="Time">
+                                    <input type="text" class="form-control" id="time_off" name="time_off" placeholder="Saat Seçin">
                                 </div>
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-secondary py-3 px-4">Uygun araçları Listele</button>
@@ -81,7 +86,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <p><a href="#" class="btn btn-primary py-3 px-4">Mükemmel Aracınızı Rezerve Edin</a></p>
+                                <p><a href="/CarPricing/Index/" class="btn btn-primary py-3 px-4">Araç Fiyat Listemizi Görün</a></p>
                             </div>
                         </div>
                     </div>

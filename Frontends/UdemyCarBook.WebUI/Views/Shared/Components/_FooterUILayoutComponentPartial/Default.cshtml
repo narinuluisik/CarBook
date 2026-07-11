@@ -1,65 +1,214 @@
-﻿<footer class="ftco-footer ftco-bg-dark ftco-section">
-    <div class="container">
-        <div class="row mb-5">
-            <div class="col-md">
-                <div class="ftco-footer-widget mb-4">
-                    <h2 class="ftco-heading-2"><a href="#" class="logo">Car<span>book</span></a></h2>
-                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
-                        <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
-                        <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
-                        <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md">
-                <div class="ftco-footer-widget mb-4 ml-md-5">
-                    <h2 class="ftco-heading-2">Hızlı Linkler</h2>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="py-2 d-block">Hakkımızda</a></li>
-                        <li><a href="#" class="py-2 d-block">Hizmetlerimiz</a></li>
-                        <li><a href="#" class="py-2 d-block">Şartlar ve Koşullar</a></li>
-                        <li><a href="#" class="py-2 d-block">En İyi Fiyat Garantisi</a></li>
-                        <li><a href="#" class="py-2 d-block">Gizlilik ve Çerez Politikası</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md">
-                <div class="ftco-footer-widget mb-4">
-                    <h2 class="ftco-heading-2">Müşteri Desteği </h2>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="py-2 d-block">Sıkça sorulanlar</a></li>
-                        <li><a href="#" class="py-2 d-block">Ödeme Yöntemleri</a></li>
-                        <li><a href="#" class="py-2 d-block">Kiralama </a></li>
-                        <li><a href="#" class="py-2 d-block">Nasıl ÇALIŞIR</a></li>
-                        <li><a href="#" class="py-2 d-block">Bize Yazın</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md">
-                <div class="ftco-footer-widget mb-4">
-                    <h2 class="ftco-heading-2">Bir sorunuz mu var?</h2>
-                    <div class="block-23 mb-3">
-                        <ul>
-                            <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
-                            <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
-                            <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
+﻿@model List<ResultFooterAddressDto>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+       $(document).ready(function () {
+
+        // btn1: Şartlar ve Koşullar (GÜNCELLENDİ)
+        $(document).on('click', '#btn1', function (e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Şartlar ve Koşullar',
+                text: 'Araba kiralama sürecine dair tüm hizmet koşullarına rezervasyonun fiziki olarak gerçekleştirileceği ofislerimizde yer alan anlaşma dökümanlarına ulaşabilirsiniz. Keyifli yolculuklar dileriz.',
+                icon: 'info',
+                confirmButtonText: 'Anladım',
+                confirmButtonColor: '#3085d6'
+            });
+        });
+
+        // btn2: En İyi Fiyat Garantisi (GÜNCELLENDİ)
+        $(document).on('click', '#btn2', function (e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'En İyi Fiyat Garantisi & Güvenlik',
+                text: 'CarBook Web Sitemiz Asp.net Core Teknolojisinde Sha256 şifreleme tekniğiyle tamamen şifreli olarak tutulması alt yapısına sahiptir. Sistemimize JWT doğrulaması yapılmaktadır. Kullanıcılarımızın ödeme yaptıktan sonra kart bilgileri kesinlikle saklanmamaktadır. T.C. Kimlik Numarası gibi bilgiler şifrelenerek tutulmaktadır. Keyifli yolculuklar dileriz.',
+                icon: 'success',
+                confirmButtonText: 'Kapat',
+                confirmButtonColor: '#3085d6'
+            });
+        });
+
+        // btn3: Gizlilik ve Çerez Politikası
+        $(document).on('click', '#btn3', function (e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Gizlilik ve Çerez Politikası',
+                html: `
+                    <div style="text-align: left; max-height: 300px; overflow-y: auto; font-size: 14px; padding: 5px;">
+                        <h5>1. Gizlilik Politikası</h5>
+                        <p>Sitemizi ziyaret ettiğinizde paylaştığınız iletişim ve analitik veriler, kullanıcı deneyiminizi iyileştirmek adına yasal çerçevede işlenmektedir. Verileriniz üçüncü şahıslarla paylaşılmaz.</p>
+                        <h5>2. Çerez Politikası</h5>
+                        <p>Sitemizin kararlı çalışması ve performans analizi için zorunlu ve işlevsel çerezler kullanılmaktadır. Tarayıcı ayarlarınızdan bunları dilediğiniz zaman yönetebilirsiniz.</p>
+                        <h5>3. İletişim</h5>
+                        <p>Politika ile ilgili sorularınız için bizimle iletişime geçebilirsiniz.</p>
+                    </div>
+                `,
+                icon: 'info',
+                confirmButtonText: 'Okudum, Kabul Ediyorum',
+                confirmButtonColor: '#3085d6',
+                width: '600px'
+            });
+        });
+
+        // btn4: Sıkça Sorulan Sorular
+        $(document).on('click', '#btn4', function (e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Sıkça Sorulan Sorular',
+                html: `
+                    <div style="text-align: left; max-height: 350px; overflow-y: auto; font-size: 14px; padding: 5px;">
+                        <strong>Q: Araç kiralamak için yaş sınırı nedir?</strong>
+                        <p>A: Ekonomik grup araçlar için en az 21 yaş ve 1 yıllık ehliyet şartı aranmaktadır.</p>
+                        <strong>Q: Depozito (Provizyon) alınıyor mu?</strong>
+                        <p>A: Evet, kiralama başlangıcında sürücünün şahsi kredi kartından araç grubuna göre değişen tutarlarda bloke konulmaktadır.</p>
+                        <strong>Q: Yakıt politikanız nedir?</strong>
+                        <p>A: Aracı hangi yakıt seviyesinde teslim aldıysanız, aynı seviyede iade etmeniz beklenmektedir.</p>
+                    </div>
+                `,
+                icon: 'question',
+                confirmButtonText: 'Kapat',
+                confirmButtonColor: '#3085d6'
+            });
+        });
+
+        // btn5: Ödeme Yöntemleri
+        $(document).on('click', '#btn5', function (e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Ödeme Yöntemleri',
+                html: `
+                    <div style="text-align: left; font-size: 14px;">
+                        <p>Ödemelerinizi web sitemiz üzerinden <strong>Kredi Kartı</strong> veya <strong>Banka Kartı</strong> (3D Secure güvencesiyle) gerçekleştirebilirsiniz.</p>
+                        <p>Araç teslimi sırasında sürücü adına kayıtlı geçerli bir kredi kartının ibraz edilmesi zorunludur. Nakit veya senetle kiralama yapılmamaktadır.</p>
+                    </div>
+                `,
+                icon: 'info',
+                confirmButtonText: 'Anladım',
+                confirmButtonColor: '#3085d6'
+            });
+        });
+
+        // btn6: Kiralama
+        $(document).on('click', '#btn6', function (e) {
+            e.preventDefault();
+            let targetUrl = $(this).attr('href');
+            Swal.fire({
+                title: 'Araç Seçimine Gidiyorsunuz',
+                text: 'Güncel araç listemizi ve fiyat tarifelerimizi göreceğiniz sayfaya yönlendiriliyorsunuz.',
+                icon: 'success',
+                timer: 2000,
+                showConfirmButton: false,
+                willClose: () => {
+                    window.location.href = targetUrl;
+                }
+            });
+        });
+
+        // btn7: Nasıl Çalışır
+        $(document).on('click', '#btn7', function (e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Nasıl Çalışır?',
+                html: `
+                    <div style="text-align: left; font-size: 14px; padding: 5px;">
+                        <ol>
+                            <li><strong>Aracını Seç:</strong> Tarih ve konum bilgilerini girip sana en uygun aracı bul.</li>
+                            <li><strong>Bilgilerini Doldur:</strong> Sürücü ve ödeme bilgilerini güvenle gir.</li>
+                            <li><strong>Rezervasyonu Tamamla:</strong> Onay kodun anında e-posta adresine gelsin.</li>
+                            <li><strong>Aracını Teslim Al:</strong> Belirtilen noktadan anahtarını al ve yola çık!</li>
+                        </ol>
+                    </div>
+                `,
+                icon: 'info',
+                confirmButtonText: 'Harika',
+                confirmButtonColor: '#3085d6'
+            });
+        });
+
+        // btn8: Bize Yazın
+        $(document).on('click', '#btn8', function (e) {
+            e.preventDefault();
+            let targetUrl = $(this).attr('href');
+            Swal.fire({
+                title: 'İletişim Formuna Yönlendiriliyorsunuz',
+                text: 'Sorularınızı, isteklerinizi veya geri bildirimlerinizi bize iletebilirsiniz.',
+                icon: 'info',
+                timer: 1800,
+                showConfirmButton: false,
+                willClose: () => {
+                    window.location.href = targetUrl;
+                }
+            });
+        });
+
+    });
+</script>
+
+@foreach (var item in Model)
+{
+    <footer class="ftco-footer ftco-bg-dark ftco-section">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-md">
+                    <div class="ftco-footer-widget mb-4">
+                        <h2 class="ftco-heading-2"><a href="#" class="logo">Car<span>book</span></a></h2>
+                        <p>@item.Description</p>
+                        <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
+                            <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+                            <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+                            <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
                         </ul>
                     </div>
                 </div>
+                <div class="col-md">
+                    <div class="ftco-footer-widget mb-4 ml-md-5">
+                        <h2 class="ftco-heading-2">Hızlı Linkler</h2>
+                        <ul class="list-unstyled">
+                            <li><a href="/About/Index/" class="py-2 d-block">Hakkımızda</a></li>
+                            <li><a href="/Car/Index/" class="py-2 d-block">Hizmetlerimiz</a></li>
+                            <li><a href="#" id="btn1" class="py-2 d-block">Şartlar ve Koşullar</a></li>
+                            <li><a href="#" id="btn2" class="py-2 d-block">En İyi Fiyat Garantisi</a></li>
+                            <li><a href="#" id="btn3" class="py-2 d-block">Gizlilik ve Çerez Politikası</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="ftco-footer-widget mb-4">
+                        <h2 class="ftco-heading-2">Müşteri Desteği </h2>
+                        <ul class="list-unstyled">
+                            <li><a href="#" id="btn4" class="py-2 d-block">Sıkça sorulanlar</a></li>
+                            <li><a href="#" id="btn5" class="py-2 d-block">Ödeme Yöntemleri</a></li>
+                            <li><a href="/CarPricing/Index/" id="btn6" class="py-2 d-block">Kiralama </a></li>
+                            <li><a href="#" id="btn7" class="py-2 d-block">Nasıl Çalışır</a></li>
+                            <li><a href="/Contact/Index/" id="btn8" class="py-2 d-block">Bize Yazın</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="ftco-footer-widget mb-4">
+                        <h2 class="ftco-heading-2">Bir sorunuz mu var?</h2>
+                        <div class="block-23 mb-3">
+                            <ul>
+                                <li><span class="icon icon-map-marker"></span><span class="text">@item.Address</span></li>
+                                <li><span class="icon icon-phone"></span><span class="text">@item.Phone</span></li>
+                                <li><span class="icon icon-envelope"></span><span class="text">@item.Email</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p>
+                        Copyright &copy;<script>document.write(new Date().getFullYear());</script> Tüm hakları saklıdır | Bu şablon <i class="icon-heart color-danger" aria-hidden="true"></i> ile yapılmıştır <a href="https://colorlib.com" target="_blank">Colorlib</a> tarafından
+                    </p>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12 text-center">
-
-                <p>
-                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> Tüm hakları saklıdır | Bu şablon <i class="icon-heart color-danger" aria-hidden="true"></i> ile yapılmıştır <a href="https://colorlib.com" target="_blank">Colorlib</a> tarafından
-                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                </p>
-            </div>
-        </div>
-    </div>
-</footer>
-<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" /><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" /></svg></div>
-
+    </footer>
+    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" /><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" /></svg></div>
+}
