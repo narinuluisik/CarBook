@@ -26,8 +26,14 @@ namespace UdemyCarBook.Application.Features.Mediator.Handlers.BlogHandlers
         public async Task<GetBlogByIdQueryResult> Handle(GetBlogByIdQuery request, CancellationToken cancellationToken)
         {
            var values = await _repository.GetByIdAsync(request.BlogId);
+           if (values == null)
+           {
+               return null;
+           }
+
            return new GetBlogByIdQueryResult()
             {
+              BlogId = values.BlogId,
               CategoryID = values.CategoryID,
                 CreatedDate = values.CreatedDate,
                 CoverImageUrl = values.CoverImageUrl,

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ namespace UdemyCarBook.Dto.BlogDtos
 {
     public class GetBlogById
     {
+        [JsonProperty("blogId")]
         public int BlogID { get; set; }
         public string Title { get; set; }
         public int AuthorID { get; set; }

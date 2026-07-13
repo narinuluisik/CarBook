@@ -11,14 +11,14 @@ namespace UdemyCarBook.Persistence.Repositories.CommentRepositories
 {
     public class CommentRepository<T> : IGenericRepository<Comment>
     {
-       private readonly CarBookContext _carBookContext;
+        private readonly CarBookContext _carBookContext;
         public CommentRepository(CarBookContext carBookContext)
         {
             _carBookContext = carBookContext;
         }
         public void Create(Comment entity)
         {
-          _carBookContext.Comments.Add(entity);
+            _carBookContext.Comments.Add(entity);
             _carBookContext.SaveChanges();
         }
 
@@ -31,7 +31,7 @@ namespace UdemyCarBook.Persistence.Repositories.CommentRepositories
                 Description = c.Description,
                 CreatedDate = c.CreatedDate,
                 BlogID = c.BlogID,
-               
+
             }
             ).ToList();
         }
@@ -40,26 +40,33 @@ namespace UdemyCarBook.Persistence.Repositories.CommentRepositories
         {
             return _carBookContext.Comments.Find(id);
         }
-        
+
 
         public void Remove(Comment entity)
         {
-           var values=  _carBookContext.Comments.Find(entity.CommentID);
-          _carBookContext.Comments.Remove(values);
+            var values = _carBookContext.Comments.Find(entity.CommentID);
+            _carBookContext.Comments.Remove(values);
             _carBookContext.SaveChanges();
 
         }
 
         public void Update(Comment entity)
         {
-          _carBookContext.Comments.Update(entity);
+            _carBookContext.Comments.Update(entity);
             _carBookContext.SaveChanges();
         }
 
-      public  List<Comment> GetCommentsByBlogId(int id)
+        public List<Comment> GetCommentsByBlogId(int id)
         {
-            return _carBookContext.Set<Comment>().Where(x=> x.BlogID == id).ToList();
+            return _carBookContext.Set<Comment>().Where(x => x.BlogID == id).ToList();
 
+        }
+
+
+        public int GetCommentCountByBlog(int id)
+        {
+            var value = _carBookContext.Comments.Where(x=>x.BlogID == id).Count();
+            return value;
         }
     }
 }

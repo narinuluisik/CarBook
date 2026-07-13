@@ -26,6 +26,11 @@ namespace WebApUdemyCarBook.WebApi.Controllers
         public async Task<IActionResult> GetBlog(int id)
         {
             var value = await _meditor.Send(new GetBlogByIdQuery(id));
+            if (value == null)
+            {
+                return NotFound();
+            }
+
             return Ok(value);
 
         }

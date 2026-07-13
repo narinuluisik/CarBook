@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using UdemyCarBook.Application.Features.Mediator.Command.CommentCommands;
 using UdemyCarBook.Application.Features.RepositoryPattern;
 using UdemyCarBookDomain.Entities;
 
@@ -10,10 +12,12 @@ namespace WebApUdemyCarBook.WebApi.Controllers
     public class CommentsController : ControllerBase
     {
         private readonly IGenericRepository<Comment> _repository;
+        private readonly IMediator _mediator;
 
-        public CommentsController(IGenericRepository<Comment> repository)
+        public CommentsController(IGenericRepository<Comment> repository, IMediator mediator)
         {
             _repository = repository;
+            _mediator = mediator;
         }
         [HttpGet]
         public IActionResult CommentList()
@@ -55,6 +59,20 @@ namespace WebApUdemyCarBook.WebApi.Controllers
             var comment = _repository.GetCommentsByBlogId(id);
             return Ok(comment);
         }
+       
 
+        [HttpGet("GetCommentCountByBlog")]
+        public IActionResult CommentCountByBlog(int id)
+        {
+            var commentCount = _repository.GetCommentCountByBlog(id);
+            return Ok(commentCount);
+        }
+
+        [HttpPost("CreateCommentWithMediator")]
+        public async Task<IActionResult> CreateCommentWithMediator(CreateCommentCommand command)
+        {
+            await _mediator.Send(command);
+            return Ok("Yorum bilgisi eklendi");
+        }
     }
 }

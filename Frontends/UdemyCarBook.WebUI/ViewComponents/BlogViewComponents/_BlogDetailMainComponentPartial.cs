@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Text.Json;
 using UdemyCarBook.Dto.BlogDtos;
+using JsonSerializer = Newtonsoft.Json.JsonSerializer;
 
 namespace UdemyCarBook.WebUI.ViewComponents.BlogViewComponents
 {
@@ -16,16 +18,19 @@ namespace UdemyCarBook.WebUI.ViewComponents.BlogViewComponents
         public async Task<IViewComponentResult> InvokeAsync(int id)
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync($"https://localhost:7087/api/Blogs/ "+id);
+            var responseMessage = await client.GetAsync($"https://localhost:7087/api/Blogs/{id}");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
-                var blog = JsonSerializer.Deserialize<GetBlogById>(jsonData, new JsonSerializerOptions
+                var blog = JsonConvert.DeserializeObject<GetBlogById>(jsonData);
+                if (blog != null && blog.BlogID == 0)
                 {
-                    PropertyNameCaseInsensitive = true
-                });
+                    blog.BlogID = id;
+                }
+
                 return View(blog);
             }
+        
             return View();
         }
     }
