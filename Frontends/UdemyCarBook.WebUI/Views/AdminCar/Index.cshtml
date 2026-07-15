@@ -30,6 +30,7 @@
                                         <th>Sil</th>
                                         <th>Güncelle</th>
                                         <th>Detay</th>
+                                        <th>Özellik Ata</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -44,7 +45,8 @@
                                             <td>@item.Km</td>
                                             <td><a href="/AdminCar/RemoveCar/@item.CarID" class="btn btn-outline-danger">Sil</a></td>
                                             <td><a href="/AdminCar/UpdateCar/@item.CarID" class="btn btn-outline-success">Güncelle</a></td>
-                                            <td><a href="/CarList/CarDeatil/@item.CarID" class="btn btn-outline-dark">Detay</a></td>
+                                            <td><a href="/Admin/AdminCarFeatureDetail/Index/@item.CarID" class="btn btn-outline-dark">Detay</a></td>
+                                            <td><a href="/Admin/AdminCarFeatureDetail/CreateFeatureByCarId/" class="btn btn-outline-primary">Özellik Ata</a></td>
                                             <td><a href="/CarList/CarDeatil/@item.CarID" class="btn btn-outline-warning">Sitede Gör</a></td>
                                     </tr>
                                    }

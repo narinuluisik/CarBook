@@ -1,0 +1,41 @@
+﻿@model List<ResultAllBlogDto>
+@{
+    int count = 0;
+}
+<div class="col-xl-6">
+    <div class="card">
+        <div class="card-body">
+
+            <h4 class="card-title">Son Bloglar</h4>
+            <p class="card-subtitle mb-4 font-size-13">
+                Yazarlarımızın Son 5 Blog Listesi
+            </p>
+
+            <div class="table-responsive">
+                <table class="table table-sm table-borderless table-hover table-centered table-nowrap mb-0">
+                    <thead>
+                        <tr>
+                            <th>Blog Başlığı</th>
+                            <th>Bloğu Aç</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            count++;
+                            <tr>
+                                <td class="align-middle">
+                                    <span class="font-size-14 font-weight-normal">@item.Title</span>
+                                </td>
+                           
+                                <td class="align-middle">
+                                    <a href="/Blog/BlogDetail/@item.blogID" class="btn btn-sm btn-outline-success py-1">Bloğu Aç</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
