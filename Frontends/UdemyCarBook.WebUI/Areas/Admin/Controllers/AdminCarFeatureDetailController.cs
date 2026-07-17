@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net.Http;
 using UdemyCarBook.Dto.BlogDtos;
@@ -8,6 +9,7 @@ using UdemyCarBook.WebUI.Areas.Admin.Controllers;
 
 namespace UdemyCarBook.WebUI.Areas.Admin.Controllers
 {
+    [Authorize(Roles ="Admin")]
     [Area("Admin")]
     [Route("Admin/AdminCarFeatureDetail")]
     public class AdminCarFeatureDetailController : Controller

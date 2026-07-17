@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text;
 using UdemyCarBook.Dto.TestimonialDtos;
@@ -6,6 +7,7 @@ using UdemyCarBook.Dto.TestimonialDtos;
 namespace UdemyCarBook.WebUI.Areas.Admin.Controllers
 {
 
+    [Authorize(Roles ="Admin")]
     [Area("Admin")]
     [Route("Admin/AdminTestimonial")]
     public class AdminTestimonialController : Controller
