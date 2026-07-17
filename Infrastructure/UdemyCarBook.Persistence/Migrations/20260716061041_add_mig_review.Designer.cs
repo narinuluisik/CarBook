@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UdemyCarBook.Persistence.Context;
 
@@ -11,9 +12,11 @@ using UdemyCarBook.Persistence.Context;
 namespace UdemyCarBook.Persistence.Migrations
 {
     [DbContext(typeof(CarBookContext))]
-    partial class CarBookContextModelSnapshot : ModelSnapshot
+    [Migration("20260716061041_add_mig_review")]
+    partial class add_mig_review
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,49 +48,6 @@ namespace UdemyCarBook.Persistence.Migrations
                     b.HasKey("AboutID");
 
                     b.ToTable("Abouts");
-                });
-
-            modelBuilder.Entity("UdemyCarBookDomain.Entities.AppRole", b =>
-                {
-                    b.Property<int>("AppRoleId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AppRoleId"));
-
-                    b.Property<string>("AppRoleName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("AppRoleId");
-
-                    b.ToTable("AppRoles");
-                });
-
-            modelBuilder.Entity("UdemyCarBookDomain.Entities.AppUser", b =>
-                {
-                    b.Property<int>("AppUserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AppUserId"));
-
-                    b.Property<int>("AppRoleId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("AppUserId");
-
-                    b.HasIndex("AppRoleId");
-
-                    b.ToTable("AppUsers");
                 });
 
             modelBuilder.Entity("UdemyCarBookDomain.Entities.Author", b =>
@@ -779,17 +739,6 @@ namespace UdemyCarBook.Persistence.Migrations
                     b.ToTable("Testimonials");
                 });
 
-            modelBuilder.Entity("UdemyCarBookDomain.Entities.AppUser", b =>
-                {
-                    b.HasOne("UdemyCarBookDomain.Entities.AppRole", "AppRole")
-                        .WithMany("AppUsers")
-                        .HasForeignKey("AppRoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AppRole");
-                });
-
             modelBuilder.Entity("UdemyCarBookDomain.Entities.Blog", b =>
                 {
                     b.HasOne("UdemyCarBookDomain.Entities.Author", "Author")
@@ -944,7 +893,7 @@ namespace UdemyCarBook.Persistence.Migrations
             modelBuilder.Entity("UdemyCarBookDomain.Entities.Review", b =>
                 {
                     b.HasOne("UdemyCarBookDomain.Entities.Car", "Car")
-                        .WithMany("Reviews")
+                        .WithMany("Reviewa")
                         .HasForeignKey("CarID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -961,11 +910,6 @@ namespace UdemyCarBook.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Blog");
-                });
-
-            modelBuilder.Entity("UdemyCarBookDomain.Entities.AppRole", b =>
-                {
-                    b.Navigation("AppUsers");
                 });
 
             modelBuilder.Entity("UdemyCarBookDomain.Entities.Author", b =>
@@ -999,7 +943,7 @@ namespace UdemyCarBook.Persistence.Migrations
 
                     b.Navigation("Reservations");
 
-                    b.Navigation("Reviews");
+                    b.Navigation("Reviewa");
                 });
 
             modelBuilder.Entity("UdemyCarBookDomain.Entities.Category", b =>
