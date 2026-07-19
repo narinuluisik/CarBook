@@ -1,10 +1,12 @@
 ﻿@model List<UdemyCarBook.Dto.TagCloudDtos.GetByIdTagCloudDto>
-<div class="tag-widget post-tag-container mb-5 mt-5">
-    <div class="tagcloud">
-        @foreach(var item in Model)
-        {
-            <a href="#" class="tag-cloud-link">@item.Title</a>
-		}
-
-      </div>
-</div>
+@if (Model != null && Model.Any())
+{
+    <div class="article-tags">
+        <div class="tagcloud">
+            @foreach (var item in Model)
+            {
+                <a href="/Blog/Index/" class="tag-cloud-link">@item.Title</a>
+            }
+        </div>
+    </div>
+}

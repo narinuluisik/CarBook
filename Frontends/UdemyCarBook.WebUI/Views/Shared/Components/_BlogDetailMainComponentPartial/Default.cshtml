@@ -1,19 +1,49 @@
 ﻿@model GetBlogById
-<div class="col-md-8 ftco-animate">
-    <h2 class="mb-3">@Model.Title</h2>
-    <p>@Model.Description</p>
-    @await Component.InvokeAsync("_BlogDetailCloudTagBlogComponentPartial", new { id = Model.BlogID })
-    @await Component.InvokeAsync("_BlodDetailAuthorAboutComponentPartial", new { id = Model.AuthorID })
+@{
+    var commentCount = ViewBag.CommentCount ?? 0;
+    var bodyText = !string.IsNullOrWhiteSpace(Model?.Content) ? Model.Content : Model?.Description;
+}
+@if (Model != null)
+{
+<div class="col-lg-8">
+    <article class="blog-detail-article">
+        <h1 class="article-title">@Model.Title</h1>
 
-    <div class="pt-5 mt-5">
-        <h3 class="mb-5">@ViewBag.CommentCount Yorum</h3>
-        @await Component.InvokeAsync("_CommentListByBlogComponentPartial", new { id = Model.BlogID })
-
-        @await Html.PartialAsync("~/Views/Blog/AddComment.cshtml", new CreateCommentDto
+        @if (Model.CreatedDate != default)
         {
-            BlogID = Model.BlogID
-                })
+            <div class="article-meta">
+                <span><i class="far fa-calendar"></i> @Model.CreatedDate.ToString("dd MMMM yyyy")</span>
+            </div>
+        }
 
-    </div>
+        @if (!string.IsNullOrWhiteSpace(Model.CoverImageUrl))
+        {
+            <div class="article-cover">
+                <img src="@Model.CoverImageUrl" alt="@Model.Title">
+            </div>
+        }
 
-</div> 
+        @if (!string.IsNullOrWhiteSpace(bodyText))
+        {
+            <p class="article-content">@bodyText</p>
+        }
+
+        @await Component.InvokeAsync("_BlogDetailCloudTagBlogComponentPartial", new { id = Model.BlogID })
+
+        @if (Model.AuthorID > 0)
+        {
+            @await Component.InvokeAsync("_BlodDetailAuthorAboutComponentPartial", new { id = Model.AuthorID })
+        }
+
+        <div class="comments-section">
+            <h3>@commentCount Yorum</h3>
+            @await Component.InvokeAsync("_CommentListByBlogComponentPartial", new { id = Model.BlogID })
+
+            @await Html.PartialAsync("~/Views/Blog/AddComment.cshtml", new CreateCommentDto
+            {
+                BlogID = Model.BlogID
+            })
+        </div>
+    </article>
+</div>
+}

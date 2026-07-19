@@ -1,93 +1,77 @@
 ﻿@model ResultCarDto
 
-@if (Model != null)
-{
-	<div class="row justify-content-center">
-		<div class="col-md-12">
-			<div class="car-details">
-				<div class="img rounded" style="background-image: url(@Model.CoverImageUrl);"></div>
-				<div class="text text-center">
-					<span class="subheading">Model</span>
-					<h2>@Model.Model</h2>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-md d-flex align-self-stretch ftco-animate">
-			<div class="media block-6 services">
-				<div class="media-body py-md-4">
-					<div class="d-flex mb-3 align-items-center">
-						<div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-dashboard"></span></div>
-						<div class="text">
-							<h3 class="heading mb-0 pl-3">
-							Km
-								<span>@Model.Km</span>
-							</h3>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-md d-flex align-self-stretch ftco-animate">
-			<div class="media block-6 services">
-				<div class="media-body py-md-4">
-					<div class="d-flex mb-3 align-items-center">
-						<div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-pistons"></span></div>
-						<div class="text">
-							<h3 class="heading mb-0 pl-3">
-								Vites Türü
-								<span>@Model.Transmission</span>
-							</h3>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-md d-flex align-self-stretch ftco-animate">
-			<div class="media block-6 services">
-				<div class="media-body py-md-4">
-					<div class="d-flex mb-3 align-items-center">
-						<div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-car-seat"></span></div>
-						<div class="text">
-							<h3 class="heading mb-0 pl-3">
-								Koltuk Sayısı
-								<span>@Model.Seat</span>
-							</h3>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-md d-flex align-self-stretch ftco-animate">
-			<div class="media block-6 services">
-				<div class="media-body py-md-4">
-					<div class="d-flex mb-3 align-items-center">
-						<div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-backpack"></span></div>
-						<div class="text">
-							<h3 class="heading mb-0 pl-3">
-								Bagaj Sayısı
-								<span>@Model.Luggage</span>
-							</h3>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-md d-flex align-self-stretch ftco-animate">
-			<div class="media block-6 services">
-				<div class="media-body py-md-4">
-					<div class="d-flex mb-3 align-items-center">
-						<div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-diesel"></span></div>
-						<div class="text">
-							<h3 class="heading mb-0 pl-3">
-								Yakıt Türü
-								<span>@Model.Fuel</span>
-							</h3>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-}
+<section class="car-detail-section">
+    <div class="container">
+        @if (Model != null && Model.CarID > 0)
+        {
+            var heroImage = !string.IsNullOrWhiteSpace(Model.BigImageUrl) ? Model.BigImageUrl : Model.CoverImageUrl;
+
+            <div class="car-showcase">
+                <div class="car-showcase-info">
+                    <span class="car-showcase-badge">@Model.BrandName</span>
+                    <h2 class="car-showcase-title">@Model.Model</h2>
+                    <p class="car-showcase-desc">Konforlu sürüş deneyimi için özenle seçilmiş premium araç. Tüm teknik detayları aşağıda inceleyebilirsiniz.</p>
+
+                    <div class="car-showcase-actions">
+                        <a href="/Reservation/Index/@Model.CarID" class="btn-showcase-primary">
+                            <i class="fas fa-key"></i> Hemen Kirala
+                        </a>
+                        <a href="/CarPricing/Index/" class="btn-showcase-secondary">
+                            <i class="fas fa-tags"></i> Fiyatları Gör
+                        </a>
+                    </div>
+                </div>
+
+                <div class="car-showcase-visual">
+                    <div class="car-showcase-glow"></div>
+                    @if (!string.IsNullOrWhiteSpace(heroImage))
+                    {
+                        <img src="@heroImage" alt="@Model.BrandName @Model.Model" class="car-showcase-img" />
+                    }
+                    <div class="car-showcase-visual-label">
+                        <span>@Model.BrandName</span>
+                        <strong>@Model.Model</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row car-spec-row">
+                <div class="col-6 col-md">
+                    <div class="car-spec-card">
+                        <div class="car-spec-icon"><span class="flaticon-dashboard"></span></div>
+                        <p class="car-spec-label">Km</p>
+                        <p class="car-spec-value">@Model.Km.ToString("N0")</p>
+                    </div>
+                </div>
+                <div class="col-6 col-md">
+                    <div class="car-spec-card">
+                        <div class="car-spec-icon"><span class="flaticon-pistons"></span></div>
+                        <p class="car-spec-label">Vites</p>
+                        <p class="car-spec-value">@Model.Transmission</p>
+                    </div>
+                </div>
+                <div class="col-6 col-md">
+                    <div class="car-spec-card">
+                        <div class="car-spec-icon"><span class="flaticon-car-seat"></span></div>
+                        <p class="car-spec-label">Koltuk</p>
+                        <p class="car-spec-value">@Model.Seat</p>
+                    </div>
+                </div>
+                <div class="col-6 col-md">
+                    <div class="car-spec-card">
+                        <div class="car-spec-icon"><span class="flaticon-backpack"></span></div>
+                        <p class="car-spec-label">Bagaj</p>
+                        <p class="car-spec-value">@Model.Luggage</p>
+                    </div>
+                </div>
+                <div class="col-6 col-md">
+                    <div class="car-spec-card">
+                        <div class="car-spec-icon"><span class="flaticon-diesel"></span></div>
+                        <p class="car-spec-label">Yakıt</p>
+                        <p class="car-spec-value">@Model.Fuel</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>

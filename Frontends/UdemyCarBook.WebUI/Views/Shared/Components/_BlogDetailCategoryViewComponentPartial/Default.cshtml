@@ -1,12 +1,15 @@
 ﻿@model List<ResultCategoryDto>
-<div class="sidebar-box ftco-animate">
+<div class="blog-sidebar-box">
     <div class="categories">
         <h3>Kategoriler</h3>
-        @foreach (var item in Model)
-        {
-            <li><a href="#">@item.Name <span>(0)</span></a></li>
-		}
-       
-        
+        <ul>
+            @if (Model != null)
+            {
+                @foreach (var item in Model)
+                {
+                    <li><a href="/Blog/Index/">@item.Name</a></li>
+                }
+            }
+        </ul>
     </div>
 </div>

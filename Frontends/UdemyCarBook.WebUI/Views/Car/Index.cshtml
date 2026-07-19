@@ -4,31 +4,328 @@
     Layout = "~/Views/UILayout/Index.cshtml";
 }
 
-<section class="ftco-section bg-light">
-    <div class="container">
-        <div class="row">
-            @foreach (var item in Model)
-            {
+<!-- ============================================= -->
+<!-- TANITIM / İSTATİSTİK ŞERİDİ (Hero'nun altı)     -->
+<!-- ============================================= -->
+<style>
+    .intro-strip {
+        background: #f5f7fb;
+        padding: 34px 0;
+        border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+        font-family: 'Poppins', sans-serif;
+    }
 
-                <div class="col-md-4">
-                    <div class="car-wrap rounded ftco-animate">
-                    <div class="img rounded d-flex align-items-end" style="background-image: url(@item.CoverImageUrl);">
-                    </div>
-                    <div class="text">
-                        <h2 class="mb-0"><a href="car-single.html">@item.Model</a></h2>
-                        <div class="d-flex mb-3">
-                            <span class="cat">@item.Brand</span>
-                            <p class="price ml-auto">@item.Amount<span>/Günlük</span></p>
-                        </div>
-                        <p class="d-flex mb-0 d-block"><a href="/Reservation/Index/@item.CarId" class="btn btn-primary py-2 mr-1">Hemen Kirala</a>
-                            <a href="/Car/CarDetail/@item.CarId" class="btn btn-secondary py-2 ml-1">Detaylar</a></p>
-                    </div>
-                </div>
-            </div>
+        .intro-strip .intro-strip-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .intro-strip h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 6px;
+        }
+
+        .intro-strip p {
+            font-size: 0.92rem;
+            color: #64748b;
+            max-width: 520px;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+    .intro-strip-stats {
+        display: flex;
+        align-items: center;
+        gap: 22px;
+        flex-wrap: wrap;
+    }
+
+        .intro-strip-stats .stat-item {
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+            .intro-strip-stats .stat-item strong {
+                font-size: 1.3rem;
+                font-weight: 800;
+                color: #2563eb;
             }
-         
+
+            .intro-strip-stats .stat-item span {
+                font-size: 0.82rem;
+                font-weight: 500;
+                color: #64748b;
+            }
+
+        .intro-strip-stats .stat-divider {
+            width: 1px;
+            height: 26px;
+            background: rgba(15, 23, 42, 0.1);
+        }
+
+    @@media (max-width: 767px) {
+        .intro-strip-inner {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+</style>
+
+<section class="intro-strip">
+    <div class="container intro-strip-inner">
+        <div>
+            <h3>Geniş araç seçenekleri</h3>
+            <p>Size en uygun modeli filomuzda bulun.</p>
         </div>
-    
+        <div class="intro-strip-stats">
+            <div class="stat-item"><strong>500+</strong><span>Araç Filosu</span></div>
+            <div class="stat-divider"></div>
+            <div class="stat-item"><strong>50+</strong><span>Lokasyon</span></div>
+            <div class="stat-divider"></div>
+            <div class="stat-item"><strong>7/24</strong><span>Destek</span></div>
+        </div>
     </div>
 </section>
 
+<style>
+    @@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght=0,400..900;1,400..900&family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+    .car-fleet-section {
+        position: relative;
+        padding: 6rem 0;
+        font-family: 'Poppins', sans-serif;
+        background: #f8fafc;
+        overflow: hidden;
+    }
+
+        .car-fleet-section::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            left: -150px;
+            bottom: -150px;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.05) 0%, transparent 75%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .car-fleet-section .container {
+            position: relative;
+            z-index: 2;
+        }
+
+    .fleet-header {
+        text-align: center;
+        margin-bottom: 4rem;
+    }
+
+        .fleet-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 40px;
+            font-weight: 700;
+            color: #0f172a;
+            letter-spacing: -0.5px;
+            margin-bottom: 16px;
+        }
+
+        .fleet-header p {
+            font-size: 14.5px;
+            color: #64748b;
+            max-width: 560px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .fleet-header .accent-line-luxury {
+            width: 40px;
+            height: 2px;
+            background: #2563eb;
+            margin: 22px auto 0 auto;
+            position: relative;
+        }
+
+            .fleet-header .accent-line-luxury::before {
+                content: '';
+                position: absolute;
+                width: 6px;
+                height: 6px;
+                background: #2563eb;
+                border-radius: 50%;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+    /* --- Araç Kartı --- */
+    .car-wrap {
+        background: #ffffff;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 8px 30px rgba(15, 23, 42, 0.04), 0 2px 6px rgba(15, 23, 42, 0.02);
+        border: 1px solid rgba(15, 23, 42, 0.03);
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+        margin-bottom: 32px;
+    }
+
+        .car-wrap:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 45px rgba(15, 23, 42, 0.09);
+        }
+
+            .car-wrap:hover .img {
+                transform: scale(1.05);
+            }
+
+        .car-wrap .img {
+            height: 220px;
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            transition: transform 0.6s ease;
+        }
+
+        .car-wrap .text {
+            padding: 24px 26px 26px;
+        }
+
+            .car-wrap .text h2 {
+                font-family: 'Playfair Display', serif;
+                font-size: 21px;
+                font-weight: 700;
+                margin-bottom: 12px;
+            }
+
+                .car-wrap .text h2 a {
+                    color: #0f172a;
+                    text-decoration: none !important;
+                    transition: color 0.3s ease;
+                }
+
+                    .car-wrap .text h2 a:hover {
+                        color: #2563eb;
+                    }
+
+        .car-wrap .cat {
+            display: inline-flex;
+            align-items: center;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: #2563eb;
+            background: rgba(37, 99, 235, 0.08);
+            border: 1px solid rgba(37, 99, 235, 0.18);
+            padding: 5px 12px;
+            border-radius: 50px;
+        }
+
+        .car-wrap .price {
+            font-size: 19px;
+            font-weight: 700;
+            color: #0f172a;
+            letter-spacing: -0.3px;
+        }
+
+            .car-wrap .price span {
+                font-size: 11px;
+                font-weight: 500;
+                color: #94a3b8;
+                text-transform: uppercase;
+                letter-spacing: 0.3px;
+                margin-left: 2px;
+            }
+
+        .car-wrap .btn-fleet {
+            height: 42px;
+            padding: 0 20px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none !important;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            flex: 1;
+        }
+
+            .car-wrap .btn-fleet.rent {
+                background: #2563eb;
+                color: #ffffff !important;
+                border: 1px solid #2563eb;
+            }
+
+                .car-wrap .btn-fleet.rent:hover {
+                    background: #0f172a;
+                    border-color: #0f172a;
+                    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.2);
+                }
+
+            .car-wrap .btn-fleet.detail {
+                background: #ffffff;
+                color: #0f172a !important;
+                border: 1px solid #e2e8f0;
+            }
+
+                .car-wrap .btn-fleet.detail:hover {
+                    background: #0f172a;
+                    color: #ffffff !important;
+                    border-color: #0f172a;
+                }
+
+        .car-wrap .fleet-btn-row {
+            display: flex;
+            gap: 10px;
+            margin: 0;
+        }
+
+    @@media (max-width: 767px) {
+        .fleet-header {
+            margin-bottom: 2.5rem;
+        }
+    }
+</style>
+
+<section class="car-fleet-section">
+    <div class="container">
+
+        <div class="fleet-header">
+            <h2>Araç Filomuz</h2>
+            <p>İhtiyacınıza uygun modeli seçin, birkaç adımda güvenle kiralayın.</p>
+            <div class="accent-line-luxury"></div>
+        </div>
+
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-4">
+                    <div class="car-wrap">
+                        <div class="img" style="background-image: url(@item.CoverImageUrl);"></div>
+                        <div class="text">
+                            <h2><a href="/Car/CarDetail/@item.CarId">@item.Model</a></h2>
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <span class="cat">@item.Brand</span>
+                                <p class="price mb-0">@item.Amount<span>/Günlük</span></p>
+                            </div>
+                            <div class="fleet-btn-row">
+                                <a href="/Reservation/Index/@item.CarId" class="btn-fleet rent">Hemen Kirala</a>
+                                <a href="/Car/CarDetail/@item.CarId" class="btn-fleet detail">Detaylar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+</section>

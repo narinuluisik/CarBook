@@ -1,48 +1,67 @@
 ﻿@model List<FilterRentACarDto>
-
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Uygun Araçlar";
     Layout = "~/Views/UILayout/Index.cshtml";
 }
-@if (ViewBag.HataMesaji != null)
-{
-    <div class="alert alert-danger">@ViewBag.HataMesaji</div>
-}
-@if (ViewBag.HamJsonVerisi != null)
-{
-    <div class="alert alert-info">@ViewBag.HamJsonVerisi</div>
-    <div class="alert alert-warning">Mevcut ID: @ViewBag.locationID</div>
-}
 
-<section class="ftco-section bg-light">
+<section class="intro-strip">
+    <div class="container intro-strip-inner">
+        <div>
+            <h3>Seçtiğiniz lokasyondaki uygun araçlar</h3>
+            <p>Tarih ve konum bilgilerinize göre filtrelenmiş kiralık araçları inceleyin.</p>
+        </div>
+        <div class="intro-strip-stats">
+            <div class="stat-item"><strong>@(Model?.Count ?? 0)</strong><span>Uygun Araç</span></div>
+            <div class="stat-divider"></div>
+            <div class="stat-item"><strong>500+</strong><span>Araç Filosu</span></div>
+            <div class="stat-divider"></div>
+            <div class="stat-item"><strong>7/24</strong><span>Destek</span></div>
+        </div>
+    </div>
+</section>
+
+<section class="car-fleet-section">
     <div class="container">
-        <div class="row">
-            @if (Model != null && Model.Count > 0)
-            {
+        <div class="fleet-header">
+            <h2>Uygun Araçlar</h2>
+            <p>Seçtiğiniz lokasyonda müsait olan araçları görüntüleyin ve hemen rezervasyon yapın.</p>
+            <div class="accent-line-luxury"></div>
+        </div>
+
+        @if (Model != null && Model.Count > 0)
+        {
+            <div class="row">
                 @foreach (var item in Model)
                 {
                     <div class="col-md-4">
-                        <div class="car-wrap rounded ftco-animate">
-                            <div class="img rounded d-flex align-items-end" style="background-image: url(@item.CoverImageUrl);">
-                            </div>
+                        <div class="car-wrap">
+                            <div class="img" style="background-image: url('@item.CoverImageUrl');"></div>
                             <div class="text">
-                                <h2 class="mb-0"><a href="car-single.html">@item.Model</a></h2>
-                                <div class="d-flex mb-3">
+                                <h2><a href="/Car/CarDetail/@item.carID">@item.Model</a></h2>
+                                <div class="d-flex align-items-center justify-content-between mb-4">
                                     <span class="cat">@item.Brand</span>
-                                    <p class="price ml-auto">000<span>/Günlük</span></p>
+                                    <p class="price mb-0">@item.Amount.ToString("0.##")<span>/Günlük</span></p>
                                 </div>
-                                <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Hemen Kirala</a> <a href="car-single.html" class="btn btn-secondary py-2 ml-1">Detaylar</a></p>
+                                <div class="fleet-btn-row">
+                                    <a href="/Reservation/Index/@item.carID" class="btn-fleet rent">Hemen Kirala</a>
+                                    <a href="/Car/CarDetail/@item.carID" class="btn-fleet detail">Detaylar</a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 }
-            }
-            else
-            {
-                <div class="col-md-12 text-center">
-                    <div class="alert alert-warning">Seçtiğiniz lokasyonda şu an kiralık araç bulunmamaktadır.</div>
-                </div>
-            }
-        </div>
+            </div>
+        }
+        else
+        {
+            <div class="fleet-empty-state">
+                <i class="fas fa-car-side"></i>
+                <h3>Uygun Araç Bulunamadı</h3>
+                <p>Seçtiğiniz lokasyonda şu an kiralık araç bulunmamaktadır. Farklı bir lokasyon veya tarih deneyebilirsiniz.</p>
+                <a href="/Default/Index/" class="btn-back">
+                    <i class="fas fa-arrow-left"></i> Ana Sayfaya Dön
+                </a>
+            </div>
+        }
     </div>
 </section>

@@ -1,29 +1,323 @@
 ﻿@model List<ResultTestimonialDto>
-<section class="ftco-section testimony-section bg-light">
+
+<style>
+    @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+    /* --- MÜŞTERİ YORUMLARI (Temaya Uyumlu, Aydınlık Arka Plan) --- */
+    .homepage-testimonials {
+        position: relative;
+        padding: 6rem 0;
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(180deg, #f3f7fc 0%, #eaf1f9 100%);
+        overflow: hidden;
+    }
+
+        .homepage-testimonials::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(0, 86, 179, 0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 86, 179, 0.035) 1px, transparent 1px);
+            background-size: 36px 36px;
+            -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+            mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .homepage-testimonials::after {
+            content: '';
+            position: absolute;
+            width: 520px;
+            height: 520px;
+            right: -160px;
+            top: -160px;
+            background: radial-gradient(circle, rgba(0, 168, 204, 0.10) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .homepage-testimonials .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* --- BAŞLIK ALANI DÜZENLEMESİ --- */
+        .homepage-testimonials .section-header {
+            text-align: center;
+            max-width: 560px;
+            margin: 0 auto 55px auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .homepage-testimonials .subheading {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 86, 179, 0.07);
+            border: 1px solid rgba(0, 86, 179, 0.15);
+            color: #0056b3;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 11.5px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .homepage-testimonials h2 {
+            font-size: 34px;
+            font-weight: 800;
+            color: #0a254a;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        /* Başlık Altındaki Dekoratif Modern Çizgi */
+        .homepage-testimonials .section-header::after {
+            content: '';
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #0056b3, #00a8cc);
+            border-radius: 2px;
+            display: block;
+        }
+
+    .carousel-testimony .item {
+        padding: 10px 10px 34px 10px;
+    }
+
+    /* --- BEYAZ AYDINLIK PREMİUM KARTLAR VE KÖŞE DETAYLARI --- */
+    .homepage-testimonial-card {
+        position: relative;
+        background: #ffffff; /* Beyaz renge geri döndü */
+        border-radius: 16px;
+        padding: 32px 26px 26px 26px;
+        box-shadow: 0 12px 32px rgba(10, 37, 74, 0.05);
+        border: 1px solid rgba(0, 86, 179, 0.06);
+        transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s ease, border-color 0.35s ease;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+        /* Üst İnce Renk Çizgisi */
+        .homepage-testimonial-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 24px;
+            right: 24px;
+            height: 3px;
+            border-radius: 0 0 3px 3px;
+            background: linear-gradient(90deg, #0056b3, #00a8cc);
+            opacity: 0.85;
+        }
+
+        /* --- KÖŞELERDEKİ TEKNOLOJİK ÇENTİK TASARIMLARI --- */
+        .homepage-testimonial-card .card-corner {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border: 2px solid transparent;
+            transition: all 0.35s ease;
+            pointer-events: none;
+            opacity: 0.4;
+        }
+        /* Sol Üst Çentik */
+        .homepage-testimonial-card .corner-tl {
+            top: 12px;
+            left: 12px;
+            border-top-color: #0056b3;
+            border-left-color: #0056b3;
+        }
+        /* Sağ Alt Çentik */
+        .homepage-testimonial-card .corner-br {
+            bottom: 12px;
+            right: 12px;
+            border-bottom-color: #00a8cc;
+            border-right-color: #00a8cc;
+        }
+
+        /* Kart Hover Durumu */
+        .homepage-testimonial-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 38px rgba(10, 37, 74, 0.1);
+            border-color: rgba(0, 168, 204, 0.2);
+        }
+
+            /* Hover Olunca Köşelerin Parlaması ve Belirginleşmesi */
+            .homepage-testimonial-card:hover .card-corner {
+                opacity: 1;
+                width: 12px;
+                height: 12px;
+            }
+
+        .homepage-testimonial-card .quote-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: rgba(0, 86, 179, 0.05);
+            color: #0056b3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            margin-bottom: 16px;
+        }
+
+        .homepage-testimonial-card .comment {
+            font-size: 14px;
+            line-height: 1.65;
+            color: #4a5c75;
+            font-weight: 400;
+            margin-bottom: 20px;
+            font-style: italic;
+            flex-grow: 1;
+        }
+
+        .homepage-testimonial-card .user-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(10, 37, 74, 0.06);
+        }
+
+        .homepage-testimonial-card .user-img-wrap {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            padding: 2px;
+            background: linear-gradient(135deg, #0056b3, #00a8cc);
+            flex-shrink: 0;
+        }
+
+        .homepage-testimonial-card .user-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+            border: 2px solid #ffffff;
+        }
+
+        .homepage-testimonial-card .name {
+            font-size: 14.5px;
+            font-weight: 700;
+            color: #0a254a;
+            margin-bottom: 2px;
+        }
+
+        .homepage-testimonial-card .position {
+            font-size: 12px;
+            font-weight: 500;
+            color: #0056b3;
+            opacity: 0.8;
+        }
+
+    /* --- OWL CAROUSEL SAYFALAMA NOKTALARI --- */
+    .homepage-testimonials .owl-dots {
+        text-align: center;
+        margin-top: 6px;
+    }
+
+        .homepage-testimonials .owl-dots .owl-dot span {
+            width: 8px;
+            height: 8px;
+            margin: 4px;
+            background: rgba(0, 86, 179, 0.15);
+            border-radius: 50%;
+            display: block;
+            transition: all 0.3s ease;
+        }
+
+        .homepage-testimonials .owl-dots .owl-dot.active span {
+            width: 24px;
+            border-radius: 5px;
+            background: linear-gradient(90deg, #0056b3, #00a8cc);
+        }
+
+    .homepage-testimonials .owl-nav {
+        position: absolute;
+        top: -92px;
+        right: 0;
+        display: flex;
+        gap: 10px;
+    }
+
+        .homepage-testimonials .owl-nav button.owl-prev,
+        .homepage-testimonials .owl-nav button.owl-next {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: #ffffff !important;
+            color: #0056b3 !important;
+            border: 1px solid rgba(0, 86, 179, 0.15);
+            box-shadow: 0 8px 20px rgba(10, 37, 74, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+            .homepage-testimonials .owl-nav button.owl-prev:hover,
+            .homepage-testimonials .owl-nav button.owl-next:hover {
+                background: #0056b3 !important;
+                color: #ffffff !important;
+                border-color: #0056b3;
+            }
+
+    @@media (max-width: 767px) {
+        .homepage-testimonials {
+            padding: 4.5rem 0;
+        }
+
+            .homepage-testimonials h2 {
+                font-size: 26px;
+            }
+
+            .homepage-testimonials .owl-nav {
+                display: none;
+            }
+    }
+</style>
+
+<section class="homepage-testimonials">
     <div class="container">
-        <div class="row justify-content-center mb-5">
-            <div class="col-md-7 text-center heading-section ftco-animate">
-                <span class="subheading">Bizim İçin Ne Dediler </span>
-                <h2 class="mb-3">Mutlu Müşteriler</h2>
-            </div>
+        <div class="section-header ftco-animate">
+            <span class="subheading">Müşteri Yorumları</span>
+            <h2>Yorumlarınız Bizim İçin Değerli</h2>
         </div>
         <div class="row ftco-animate">
             <div class="col-md-12">
                 <div class="carousel-testimony owl-carousel ftco-owl">
-                  
-                    @foreach(var item in Model)
+                    @foreach (var item in Model)
                     {
-                    <div class="item">
-                        <div class="testimony-wrap rounded text-center py-4 pb-5">
-                            <div class="user-img mb-2" style="background-image: url(@item.ImageUrl)">
-                            </div>
-                            <div class="text pt-4">
-                                <p class="mb-4">@item.Comment</p>
-                                <p class="name">@item.Name</p>
-                                <span class="position">@item.Title</span>
+                        <div class="item">
+                            <div class="homepage-testimonial-card">
+                                <!-- Köşe Detay Elemanları -->
+                                <div class="card-corner corner-tl"></div>
+                                <div class="card-corner corner-br"></div>
+
+                                <div>
+                                    <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+                                    <p class="comment">"@item.Comment"</p>
+                                </div>
+                                <div class="user-meta">
+                                    <div class="user-img-wrap">
+                                        <div class="user-img" style="background-image: url('@item.ImageUrl')"></div>
+                                    </div>
+                                    <div>
+                                        <p class="name">@item.Name</p>
+                                        <span class="position">@item.Title</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     }
                 </div>
             </div>

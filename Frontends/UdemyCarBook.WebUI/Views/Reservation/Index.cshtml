@@ -4,48 +4,285 @@
     Layout = "~/Views/UILayout/Index.cshtml";
 }
 
-<div class="col-md-12 block-9 mb-md-5">
-    <form method="post" class="bg-light p-5 contact-form">
-		<h3 class="mb-4 billing-heading">Rezervasyon Bilgileri</h3>
-        <br />
-        <div class="form-group">
-            <input type="hidden" asp-for="CarID" value="@ViewBag.v3" class="form-control" placeholder="Almak İstediğiniz Araba" readonly>
-        </div>
-        <div class="form-group">
-            <input type="text" asp-for="Name" class="form-control" placeholder="Adınız">
-        </div>
-        <div class="form-group">
-            <input type="text" asp-for="Surname" class="form-control" placeholder="Soyadınız">
-        </div>
-        <div class="form-group">
-            <input type="text" asp-for="Email" class="form-control" placeholder="E-posta Adresiniz">
-        </div>
-        <div class="form-group">
-            <input type="text" asp-for="Phone" class="form-control" placeholder="Telefon Numaranız">
-        </div>
-        <div class="form-group">
-            @Html.DropDownListFor(x => x.DropOffLocationID, (List<SelectListItem>)ViewBag.v, new { @class = "form-control" })
+<style>
+    @@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght=0,400..900;1,400..900&family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
-        </div>
-        <div class="form-group">
-            @Html.DropDownListFor(x => x.PickUpLocationID, (List<SelectListItem>)ViewBag.v, new { @class = "form-control" })
-        </div>
+    .reservation-section {
+        font-family: 'Poppins', sans-serif;
+        background: #f8fafc;
+        padding: 5rem 0;
+        position: relative;
+        overflow: hidden;
+    }
 
-        <div class="form-group">
-            <input type="text" asp-for="Age" value=""  class="form-control" placeholder="Yaşınız">
-        </div>
+        .reservation-section::before {
+            content: '';
+            position: absolute;
+            width: 550px;
+            height: 550px;
+            right: -160px;
+            top: -160px;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.05) 0%, transparent 75%);
+            pointer-events: none;
+        }
 
-        <div class="form-group">
-            <input type="text" asp-for="DriverLicenseYear" value="" class="form-control" placeholder="Ehliyet Yılı">
-        </div>
+    .reservation-card {
+        position: relative;
+        z-index: 2;
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 16px 45px rgba(15, 23, 42, 0.06), 0 4px 12px rgba(15, 23, 42, 0.03);
+        border: 1px solid rgba(15, 23, 42, 0.03);
+        padding: 3rem;
+        max-width: 860px;
+        margin: 0 auto;
+    }
 
-        <div class="form-group">
-            <textarea cols="30" rows="7" asp-for="Description" class="form-control" placeholder="Varsa Eklemek İstedikleriniz"></textarea>
-        </div>
+    .reservation-header {
+        text-align: center;
+        margin-bottom: 2.75rem;
+    }
 
-        <div class="form-group">
-            <input type="submit" value="Rezervasyonu Tamamla" class="btn btn-primary py-3 px-5">
-        </div>
+        .reservation-header .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #2563eb;
+            background: rgba(37, 99, 235, 0.08);
+            border: 1px solid rgba(37, 99, 235, 0.18);
+            padding: 6px 16px;
+            border-radius: 50px;
+            margin-bottom: 16px;
+        }
 
-    </form>
-</div>
+        .reservation-header h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 30px;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 0 0 10px;
+        }
+
+        .reservation-header p {
+            font-size: 13.5px;
+            color: #64748b;
+            margin: 0;
+        }
+
+    .reservation-form .form-group {
+        margin-bottom: 20px;
+    }
+
+    .reservation-form .input-icon-wrap {
+        position: relative;
+    }
+
+        .reservation-form .input-icon-wrap i {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 14px;
+            color: #94a3b8;
+            transition: color 0.25s ease;
+            pointer-events: none;
+        }
+
+    .reservation-form label.field-label {
+        display: block;
+        font-size: 11.5px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #64748b;
+        margin-bottom: 8px;
+    }
+
+    .reservation-form .form-control {
+        height: 50px;
+        border-radius: 10px;
+        border: 1px solid #e2e8f0;
+        background: #f8fafc;
+        font-size: 14px;
+        color: #0f172a;
+        padding: 0 18px 0 44px;
+        box-shadow: none;
+        transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .reservation-form select.form-control {
+        padding-left: 44px;
+        appearance: none;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' stroke='%2394a3b8' stroke-width='1.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+        background-repeat: no-repeat;
+        background-position: right 16px center;
+    }
+
+    .reservation-form textarea.form-control {
+        height: auto;
+        min-height: 130px;
+        padding: 16px 18px 16px 44px;
+        resize: vertical;
+    }
+
+        .reservation-form textarea.form-control ~ i {
+            top: 26px;
+            transform: none;
+        }
+
+    .reservation-form .form-control::placeholder {
+        color: #94a3b8;
+    }
+
+    .reservation-form .form-control:focus {
+        outline: none;
+        border-color: #2563eb;
+        background: #ffffff;
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+    }
+
+        .reservation-form .form-control:focus ~ i {
+            color: #2563eb;
+        }
+
+    .reservation-form .form-row-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+    }
+
+    .reservation-form .btn-reserve-submit {
+        width: 100%;
+        height: 54px;
+        border: none;
+        border-radius: 10px;
+        background: #2563eb;
+        color: #ffffff;
+        font-size: 13px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        cursor: pointer;
+        transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    }
+
+        .reservation-form .btn-reserve-submit:hover {
+            background: #0f172a;
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.2);
+            transform: translateY(-2px);
+        }
+
+    @@media (max-width: 640px) {
+        .reservation-card {
+            padding: 2rem 1.4rem;
+        }
+
+        .reservation-form .form-row-2 {
+            grid-template-columns: 1fr;
+            gap: 0;
+        }
+    }
+</style>
+
+<section class="reservation-section">
+    <div class="container">
+        <div class="reservation-card">
+
+            <div class="reservation-header">
+                <span class="tag"><i class="fas fa-car"></i> Rezervasyon</span>
+                <h3>Rezervasyon Bilgileri</h3>
+                <p>Aracınızı ayırtmak için aşağıdaki bilgileri eksiksiz doldurun.</p>
+            </div>
+
+            <form method="post" class="reservation-form">
+
+                <input type="hidden" asp-for="CarID" value="@ViewBag.v3" readonly>
+
+                <div class="form-row-2">
+                    <div class="form-group">
+                        <label class="field-label">Adınız</label>
+                        <div class="input-icon-wrap">
+                            <i class="fas fa-user"></i>
+                            <input type="text" asp-for="Name" class="form-control" placeholder="Adınız">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="field-label">Soyadınız</label>
+                        <div class="input-icon-wrap">
+                            <i class="fas fa-user"></i>
+                            <input type="text" asp-for="Surname" class="form-control" placeholder="Soyadınız">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row-2">
+                    <div class="form-group">
+                        <label class="field-label">E-posta</label>
+                        <div class="input-icon-wrap">
+                            <i class="fas fa-envelope"></i>
+                            <input type="text" asp-for="Email" class="form-control" placeholder="E-posta Adresiniz">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="field-label">Telefon</label>
+                        <div class="input-icon-wrap">
+                            <i class="fas fa-phone"></i>
+                            <input type="text" asp-for="Phone" class="form-control" placeholder="Telefon Numaranız">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row-2">
+                    <div class="form-group">
+                        <label class="field-label">Alış Lokasyonu</label>
+                        <div class="input-icon-wrap">
+                            <i class="fas fa-map-marker-alt"></i>
+                            @Html.DropDownListFor(x => x.PickUpLocationID, (List<SelectListItem>)ViewBag.v, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="field-label">Bırakış Lokasyonu</label>
+                        <div class="input-icon-wrap">
+                            <i class="fas fa-map-marker-alt"></i>
+                            @Html.DropDownListFor(x => x.DropOffLocationID, (List<SelectListItem>)ViewBag.v, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row-2">
+                    <div class="form-group">
+                        <label class="field-label">Yaşınız</label>
+                        <div class="input-icon-wrap">
+                            <i class="fas fa-id-card"></i>
+                            <input type="text" asp-for="Age" value="" class="form-control" placeholder="Yaşınız">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="field-label">Ehliyet Yılı</label>
+                        <div class="input-icon-wrap">
+                            <i class="fas fa-calendar-alt"></i>
+                            <input type="text" asp-for="DriverLicenseYear" value="" class="form-control" placeholder="Ehliyet Yılı">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="field-label">Eklemek İstedikleriniz</label>
+                    <div class="input-icon-wrap">
+                        <i class="fas fa-pen"></i>
+                        <textarea cols="30" rows="7" asp-for="Description" class="form-control" placeholder="Varsa Eklemek İstedikleriniz"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group mb-0">
+                    <button type="submit" class="btn-reserve-submit">Rezervasyonu Tamamla</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</section>

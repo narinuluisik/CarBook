@@ -1,32 +1,58 @@
 ﻿@model List<ResultLast3BlogDto>
-<section class="ftco-section">
+
+<section class="homepage-blog">
+
     <div class="container">
-        <div class="row justify-content-center mb-5">
-            <div class="col-md-7 heading-section text-center ftco-animate">
-                <span class="subheading">Bloglar</span>
-                <h2>Son Bloglar</h2>
-            </div>
-        </div>
-        <div class="row d-flex">
-            @foreach (var item in Model)
-            {
-                <div class="col-md-4 d-flex ftco-animate">
-                    <div class="blog-entry justify-content-end">
-                        <a href="Blog/BlogDetail/@item.BlogId" class="block-20" style="background-image: url('@item.CoverImageUrl');">
-                        </a>
-                        <div class="text pt-4">
-                            <div class="meta mb-3">
-                                <div><a href="#">@item.CreatedDate</a></div>
-                                <div><a href="#">@item.AuthorName</a></div>
-                            </div>
-                            <h3 class="heading mt-2"><a href="#">@item.Title</a></h3>
-                            <p><a href="Blog/BlogDetail/@item.BlogId" class="btn btn-primary">Devamını Oku</a></p>
-                        </div>
-                    </div>
-                </div>
-                
-            }
-        </div>
+
+        <div class="section-header ftco-animate">
+
+            <span class="subheading">Blog</span>
+
+            <h2>Son Yazılarımız</h2>
+
         </div>
 
+        <div class="row">
+
+            @foreach (var item in Model)
+
+            {
+
+                <div class="col-md-4 mb-4 ftco-animate">
+
+                    <div class="homepage-blog-card">
+
+                        <a href="/Blog/BlogDetail/@item.BlogId" class="blog-image d-block" style="background-image: url('@item.CoverImageUrl');"></a>
+
+                        <div class="blog-body">
+
+                            <div class="blog-meta">
+
+                                <span><i class="far fa-calendar mr-1"></i> @item.CreatedDate</span>
+
+                                <span><i class="far fa-user mr-1"></i> @item.AuthorName</span>
+
+                            </div>
+
+                            <h3><a href="/Blog/BlogDetail/@item.BlogId">@item.Title</a></h3>
+
+                            <a href="/Blog/BlogDetail/@item.BlogId" class="btn-read">
+
+                                Devamını Oku <i class="fas fa-arrow-right"></i>
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            }
+
+        </div>
+
+    </div>
+
 </section>
+

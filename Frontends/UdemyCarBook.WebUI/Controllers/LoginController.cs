@@ -7,7 +7,6 @@ using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
 using UdemyCarBook.Dto.LoginDtos;
-using UdemyCarBook.Dto.RegisterDtos;
 using UdemyCarBook.WebUI.Models;
 
 namespace UdemyCarBook.WebUI.Controllers
@@ -64,6 +63,12 @@ namespace UdemyCarBook.WebUI.Controllers
             }
           
             return View();
+        }
+
+        public async Task<IActionResult> LogOut()
+        {
+            await HttpContext.SignOutAsync(JwtBearerDefaults.AuthenticationScheme);
+            return RedirectToAction("Index", "Login");
         }
     }
 }

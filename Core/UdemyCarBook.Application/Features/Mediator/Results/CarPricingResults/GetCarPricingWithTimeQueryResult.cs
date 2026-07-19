@@ -8,6 +8,7 @@ namespace UdemyCarBook.Application.Features.Mediator.Results.CarPricingResults
 {
     public class GetCarPricingWithTimeQueryResult
     {
+        public int CarId { get; set; }
         public string Model { get; set; }
         public decimal DailyAmount { get; set; }
         public decimal WeeklyAmount { get; set; }

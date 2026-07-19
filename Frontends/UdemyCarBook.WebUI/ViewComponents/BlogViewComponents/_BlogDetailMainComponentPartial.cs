@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Text.Json;
 using UdemyCarBook.Dto.BlogDtos;
-using JsonSerializer = Newtonsoft.Json.JsonSerializer;
 
 namespace UdemyCarBook.WebUI.ViewComponents.BlogViewComponents
 {
@@ -28,9 +26,21 @@ namespace UdemyCarBook.WebUI.ViewComponents.BlogViewComponents
                     blog.BlogID = id;
                 }
 
+                var commentResponse = await client.GetAsync($"https://localhost:7087/api/Comments/GetCommentCountByBlog?id={id}");
+                if (commentResponse.IsSuccessStatusCode)
+                {
+                    var commentCountData = await commentResponse.Content.ReadAsStringAsync();
+                    var rawCount = (commentCountData ?? string.Empty).Trim().Trim('"');
+                    ViewBag.CommentCount = int.TryParse(rawCount, out var count) ? count : 0;
+                }
+                else
+                {
+                    ViewBag.CommentCount = 0;
+                }
+
                 return View(blog);
             }
-        
+
             return View();
         }
     }

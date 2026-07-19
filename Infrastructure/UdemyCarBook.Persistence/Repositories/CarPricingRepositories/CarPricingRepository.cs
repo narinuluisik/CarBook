@@ -30,6 +30,7 @@ namespace UdemyCarBook.Persistence.Repositories.CarPricingRepositories
         FROM
         (
             SELECT
+                Cars.CarID,
                 Cars.Model,
                 Cars.CoverImageUrl,
                 Brands.Name AS BrandName,
@@ -54,6 +55,7 @@ namespace UdemyCarBook.Persistence.Repositories.CarPricingRepositories
                     {
                         CarPricingViewModel carPricingViewModel = new CarPricingViewModel()
                         {
+                            CarId = Convert.ToInt32(reader["CarID"]),
                             Model = reader["Model"].ToString(),
                             CoverImageUrl = reader["CoverImageUrl"].ToString(),
                             BrandName = reader["BrandName"].ToString(),

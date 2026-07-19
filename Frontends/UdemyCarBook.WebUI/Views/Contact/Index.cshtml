@@ -1,38 +1,99 @@
 ﻿@model CreateContactDto
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "İletişim";
     Layout = "~/Views/UILayout/Index.cshtml";
 }
 
-<section class="ftco-section contact-section">
-    <div class="container">
-        <div class="row d-flex mb-5 contact-info">
-			@await Component.InvokeAsync("_FooterAdressComponentPartial")
-            <div class="col-md-8 block-9 mb-md-5">
-                <form action="" class="bg-light p-5 contact-form " method="post">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Adınız Soyadınız" asp-for="Name">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Mail Adresiniz" asp-for="Email">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Konu" asp-for="Subject">
-                    </div>
-                    <div class="form-group">
-                        <textarea  cols="30" rows="7" class="form-control" placeholder="Mesajınız" asp-for="Message"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" value="Mesaj Gönder" class="btn btn-primary py-3 px-5">
-                    </div>
-                </form>
+<section class="intro-strip">
+    <div class="container intro-strip-inner">
+        <div>
+            <h3>Size yardımcı olmaya hazırız</h3>
+            <p>Rezervasyon, fiyat teklifi veya genel sorularınız için bize ulaşın; ekibimiz en kısa sürede yanıt verir.</p>
+        </div>
+        <div class="intro-strip-stats">
+            <div class="stat-item"><strong>7/24</strong><span>Destek</span></div>
+            <div class="stat-divider"></div>
+            <div class="stat-item"><strong>50+</strong><span>Lokasyon</span></div>
+            <div class="stat-divider"></div>
+            <div class="stat-item"><strong>500+</strong><span>Araç Filosu</span></div>
+        </div>
+    </div>
+</section>
 
+<section class="contact-section">
+    <div class="container">
+        <div class="section-header-modern">
+            <h2>İletişim Formu</h2>
+            <p>Sorularınız, önerileriniz veya rezervasyon talepleriniz için formu doldurun; size en kısa sürede dönüş yapalım.</p>
+            <div class="accent-line"></div>
+        </div>
+
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <div class="contact-alert contact-alert-error">
+                <i class="fas fa-exclamation-circle"></i> @ViewBag.ErrorMessage
+            </div>
+        }
+
+        <div class="row">
+            <div class="col-lg-4 mb-4 mb-lg-0">
+                <div class="contact-info-card">
+                    <h4>İletişim Bilgileri</h4>
+                    <p>Aşağıdaki kanallardan da bize doğrudan ulaşabilirsiniz.</p>
+                    @await Component.InvokeAsync("_FooterAdressComponentPartial")
+
+                    <div class="contact-info-hours">
+                        <div class="contact-info-icon"><i class="far fa-clock"></i></div>
+                        <div class="contact-info-text">
+                            <strong>Çalışma Saatleri</strong>
+                            <p>Pazartesi – Cumartesi: 08:00 – 20:00<br />Pazar: 09:00 – 18:00</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-8">
+                <div class="contact-form-card">
+                    <form asp-action="Index" asp-controller="Contact" method="post" class="contact-form">
+                        <div class="contact-form-row">
+                            <div class="form-group">
+                                <label class="field-label">Ad Soyad</label>
+                                <div class="input-icon-wrap">
+                                    <i class="fas fa-user"></i>
+                                    <input type="text" class="form-control" placeholder="Adınız Soyadınız" asp-for="Name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="field-label">E-posta</label>
+                                <div class="input-icon-wrap">
+                                    <i class="fas fa-envelope"></i>
+                                    <input type="email" class="form-control" placeholder="ornek@email.com" asp-for="Email">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="field-label">Konu</label>
+                            <div class="input-icon-wrap">
+                                <i class="fas fa-tag"></i>
+                                <input type="text" class="form-control" placeholder="Mesaj konusu" asp-for="Subject">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="field-label">Mesajınız</label>
+                            <div class="input-icon-wrap">
+                                <i class="fas fa-pen"></i>
+                                <textarea rows="6" class="form-control" placeholder="Mesajınızı buraya yazın..." asp-for="Message"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group mb-0">
+                            <button type="submit" class="btn-contact-submit">
+                                Mesaj Gönder <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-        <div class="row justify-content-center">
-            <div class="col-md-12">
-                <div id="map" class="bg-white"></div>
-            </div>
-        </div>
+
     </div>
 </section>

@@ -1,81 +1,630 @@
 ﻿@model List<ResultCarPricingListWithModelDto>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Fiyat Listesi";
     Layout = "~/Views/UILayout/Index.cshtml";
+    ViewBag.v1 = "Fiyatlar";
+    ViewBag.v2 = "Fiyat Tarifelerimiz";
 }
 
+<!-- ============================================= -->
+<!-- TANITIM / İSTATİSTİK ŞERİDİ (Hero'nun altı)     -->
+<!-- ============================================= -->
+<style>
+    .intro-strip {
+        background: #f5f7fb;
+        padding: 34px 0;
+        border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+        font-family: 'Poppins', sans-serif;
+    }
 
-<section class="ftco-section ftco-cart">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12 ftco-animate">
-				<div class="car-list">
-					<table class="table">
-						<thead class="thead-primary">
-							<tr class="text-center">
-								<th>&nbsp;</th>
-								<th>&nbsp;</th>
-								<th class="bg-primary heading">Günlük Kiralama Ücreti</th>
-								<th class="bg-dark heading">Haftalık Kiralama Ücreti</th>
-								<th class="bg-black heading">Aylık Kiralama Ücreti</th>
-							</tr>
-						</thead>
-						@foreach (var item in Model)
-						{
+        .intro-strip .intro-strip-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
 
-							<tbody>
-								<tr class="">
-									<td class="car-image"><div class="img" style="background-image:url(@item.CoverImageUrl);"></div></td>
-									<td class="product-name">
-										<h3>@item.BrandName @item.Model</h3>
-										<p class="mb-0 rated">
-											<span>rated:</span>
-											<span class="ion-ios-star"></span>
-											<span class="ion-ios-star"></span>
-											<span class="ion-ios-star"></span>
-											<span class="ion-ios-star"></span>
-											<span class="ion-ios-star"></span>
-											<span class="ion-ios-star"></span>
-										</p>
-									</td>
+        .intro-strip h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 6px;
+        }
 
-									<td class="price">
-										<p class="btn-custom"><a href="#">Bu Aracı Kiralatın</a></p>
-										<div class="price-rate">
-											<h3>
-												<span class="num"><small class="currency">₺</small>@item.DailyAmount</span>
-												<span class="per">/Günlük Fiyat</span>
-											</h3>
-											
-										</div>
-									</td>
+        .intro-strip p {
+            font-size: 0.92rem;
+            color: #64748b;
+            max-width: 520px;
+            line-height: 1.7;
+            margin: 0;
+        }
 
-									<td class="price">
-										<p class="btn-custom"><a href="#">Bu Aracı Kiralayın</a></p>
-										<div class="price-rate">
-											<h3>
-												<span class="num"><small class="currency">₺</small> @item.WeeklyAmount</span>
-												<span class="per">/Haftalık Fiyat</span>
-											</h3>
-										</div>
-									</td>
+    .intro-strip-stats {
+        display: flex;
+        align-items: center;
+        gap: 22px;
+        flex-wrap: wrap;
+    }
 
-									<td class="price">
-										<p class="btn-custom"><a href="#">Bu Aracı Kiralayın</a></p>
-										<div class="price-rate">
-											<h3>
-												<span class="num"><small class="currency">₺</small> @item.MonthlyAmount</span>
-												<span class="per">/Aylık Fiyat</span>
-											</h3>
-										</div>
-									</td>
-								</tr><!-- END TR-->
+        .intro-strip-stats .stat-item {
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+            white-space: nowrap;
+        }
 
-							</tbody>
-						}
-					</table>
-				</div>
-			</div>
-		</div>
-	</div>
+            .intro-strip-stats .stat-item strong {
+                font-size: 1.3rem;
+                font-weight: 800;
+                color: #2563eb;
+            }
+
+            .intro-strip-stats .stat-item span {
+                font-size: 0.82rem;
+                font-weight: 500;
+                color: #64748b;
+            }
+
+        .intro-strip-stats .stat-divider {
+            width: 1px;
+            height: 26px;
+            background: rgba(15, 23, 42, 0.1);
+        }
+
+    @@media (max-width: 767px) {
+        .intro-strip-inner {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+</style>
+
+<section class="intro-strip">
+    <div class="container intro-strip-inner">
+        <div>
+            <h3>Her bütçeye uygun tarifeler</h3>
+            <p>Size en uygun kiralama planını seçin.</p>
+        </div>
+        <div class="intro-strip-stats">
+            <div class="stat-item"><strong>500+</strong><span>Araç Filosu</span></div>
+            <div class="stat-divider"></div>
+            <div class="stat-item"><strong>50+</strong><span>Lokasyon</span></div>
+            <div class="stat-divider"></div>
+            <div class="stat-item"><strong>7/24</strong><span>Destek</span></div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================= -->
+<!-- FİYAT TABLOSU (Lacivert / Mavi tema)           -->
+<!-- ============================================= -->
+<style>
+    /* --- LACİVERT & MAVİ TEMALI FİYAT TABLOSU --- */
+    @@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght=0,400..900;1,400..900&family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+    .premium-pricing-section {
+        position: relative;
+        padding: 6rem 0;
+        font-family: 'Poppins', sans-serif;
+        background: #f8fafc;
+        overflow: hidden;
+        min-height: 85vh;
+    }
+
+        .premium-pricing-section::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            right: -100px;
+            top: -100px;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.05) 0%, transparent 75%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .premium-pricing-section .container {
+            position: relative;
+            z-index: 2;
+        }
+
+    /* --- Kenarlarda dolaşan küçük mavi araba (görünür, metinlerin ÜZERİNE gelmez) --- */
+    .road-car-decor {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        overflow: hidden;
+        pointer-events: none;
+    }
+
+        .road-car-decor svg {
+            position: absolute;
+            width: 52px;
+            height: auto;
+            filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.55));
+            animation: driveEdges 24s linear infinite;
+            transform-origin: center center;
+            top: 2%;
+            left: 1%;
+        }
+
+    /* Sadece üst/alt/yan kenar şeridinde dolaşır, içerik alanına girmez, ters dönmez */
+    @@keyframes driveEdges {
+        0% {
+            top: 2%;
+            left: 1%;
+            transform: scaleX(1);
+        }
+
+        14% {
+            top: 2%;
+            left: 96%;
+            transform: scaleX(1);
+        }
+
+        18% {
+            top: 4%;
+            left: 97%;
+            transform: scaleX(1);
+        }
+
+        32% {
+            top: 94%;
+            left: 97%;
+            transform: scaleX(1);
+        }
+
+        36% {
+            top: 96%;
+            left: 95%;
+            transform: scaleX(-1);
+        }
+
+        50% {
+            top: 96%;
+            left: 3%;
+            transform: scaleX(-1);
+        }
+
+        54% {
+            top: 94%;
+            left: 1%;
+            transform: scaleX(-1);
+        }
+
+        68% {
+            top: 4%;
+            left: 1%;
+            transform: scaleX(-1);
+        }
+
+        72% {
+            top: 2%;
+            left: 1%;
+            transform: scaleX(1);
+        }
+
+        100% {
+            top: 2%;
+            left: 1%;
+            transform: scaleX(1);
+        }
+    }
+
+    @@media (max-width: 767px) {
+        .road-car-decor svg {
+            width: 38px;
+        }
+    }
+
+    /* --- Sayfa Başlığı --- */
+    .pricing-header {
+        text-align: center;
+        margin-bottom: 4.5rem;
+    }
+
+        .pricing-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 44px;
+            font-weight: 700;
+            color: #0f172a;
+            letter-spacing: -0.5px;
+            margin-bottom: 18px;
+        }
+
+        .pricing-header p {
+            font-size: 14.5px;
+            color: #64748b;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.8;
+            letter-spacing: 0.2px;
+        }
+
+        .pricing-header .accent-line-luxury {
+            width: 40px;
+            height: 2px;
+            background: #2563eb;
+            margin: 22px auto 0 auto;
+            position: relative;
+        }
+
+            .pricing-header .accent-line-luxury::before {
+                content: '';
+                position: absolute;
+                width: 6px;
+                height: 6px;
+                background: #2563eb;
+                border-radius: 50%;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+    /* --- Tablo --- */
+    .luxury-table-responsive {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 5px;
+    }
+
+    .luxury-pricing-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 16px;
+        vertical-align: middle;
+    }
+
+        .luxury-pricing-table thead th {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #475569;
+            border: none;
+            padding: 12px 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(37, 99, 235, 0.15);
+        }
+
+            .luxury-pricing-table thead th.align-left {
+                text-align: left;
+            }
+
+        .luxury-pricing-table tbody tr {
+            background: #ffffff;
+            box-shadow: 0 8px 30px rgba(15, 23, 42, 0.03), 0 2px 6px rgba(15, 23, 42, 0.02);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+            .luxury-pricing-table tbody tr:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 16px 40px rgba(15, 23, 42, 0.07);
+            }
+
+        .luxury-pricing-table tbody td {
+            padding: 22px;
+            background: #ffffff;
+            border-top: 1px solid rgba(15, 23, 42, 0.03);
+            border-bottom: 1px solid rgba(15, 23, 42, 0.03);
+            vertical-align: middle;
+            transition: border-color 0.4s ease;
+        }
+
+            .luxury-pricing-table tbody td:first-child {
+                border-left: 1px solid rgba(15, 23, 42, 0.03);
+                border-radius: 14px 0 0 14px;
+                width: 140px;
+            }
+
+            .luxury-pricing-table tbody td:last-child {
+                border-right: 1px solid rgba(15, 23, 42, 0.03);
+                border-radius: 0 14px 14px 0;
+            }
+
+        .luxury-pricing-table tbody tr:hover td {
+            border-color: rgba(37, 99, 235, 0.18);
+        }
+
+            .luxury-pricing-table tbody tr:hover td:first-child {
+                border-left-color: #2563eb;
+            }
+
+    /* --- Görsel Kutusu --- */
+    .table-car-image-box {
+        width: 120px;
+        height: 72px;
+        border-radius: 8px;
+        overflow: hidden;
+        background: #f1f5f9;
+        border: 1px solid rgba(15, 23, 42, 0.03);
+    }
+
+        .table-car-image-box .img-fluid {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+
+    /* --- İsim & Derecelendirme --- */
+    .table-product-info h3 {
+        font-family: 'Playfair Display', serif;
+        font-size: 19px;
+        font-weight: 700;
+        color: #0f172a;
+        margin-bottom: 6px;
+    }
+
+        .table-product-info h3 a {
+            color: #0f172a;
+            text-decoration: none !important;
+            transition: color 0.3s ease;
+        }
+
+            .table-product-info h3 a:hover {
+                color: #2563eb;
+            }
+
+    .stars-rating {
+        display: flex;
+        align-items: center;
+        gap: 3px;
+    }
+
+        .stars-rating i {
+            color: #2563eb;
+            font-size: 10px;
+        }
+
+        .stars-rating span {
+            font-size: 10.5px;
+            font-weight: 600;
+            color: #64748b;
+            margin-left: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+    /* --- Fiyat & Buton --- */
+    .table-price-box {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+        .table-price-box .price-amount {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0f172a;
+            letter-spacing: -0.5px;
+        }
+
+            .table-price-box .price-amount small {
+                font-size: 11px;
+                font-weight: 500;
+                color: #94a3b8;
+                margin-right: 2px;
+            }
+
+    .btn-table-rent {
+        height: 34px;
+        padding: 0 16px;
+        border-radius: 6px;
+        font-size: 11px;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none !important;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border: 1px solid #e2e8f0;
+        background: #ffffff;
+        color: #0f172a !important;
+    }
+
+    .table-price-box.daily .btn-table-rent:hover {
+        background: #0f172a;
+        color: #ffffff !important;
+        border-color: #0f172a;
+    }
+
+    .table-price-box.weekly .btn-table-rent:hover {
+        background: #0056b3;
+        color: #ffffff !important;
+        border-color: #0056b3;
+    }
+
+    .table-price-box.monthly .btn-table-rent {
+        background: rgba(37, 99, 235, 0.08);
+        border-color: rgba(37, 99, 235, 0.2);
+        color: #2563eb !important;
+    }
+
+        .table-price-box.monthly .btn-table-rent:hover {
+            background: #2563eb;
+            color: #ffffff !important;
+            border-color: #2563eb;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+        }
+
+    /* --- Responsive --- */
+    @@media (max-width: 991px) {
+        .luxury-pricing-table thead {
+            display: none;
+        }
+
+        .luxury-pricing-table, .luxury-pricing-table tbody, .luxury-pricing-table tr, .luxury-pricing-table td {
+            display: block;
+            width: 100% !important;
+        }
+
+            .luxury-pricing-table tbody tr {
+                margin-bottom: 25px;
+                border-radius: 14px;
+                border: 1px solid rgba(15, 23, 42, 0.04);
+                padding: 18px;
+            }
+
+            .luxury-pricing-table tbody td {
+                border: none !important;
+                padding: 8px 0 !important;
+                text-align: center;
+            }
+
+                .luxury-pricing-table tbody td:first-child {
+                    width: 100% !important;
+                }
+
+        .table-car-image-box {
+            margin: 0 auto 8px auto;
+            width: 160px;
+            height: 96px;
+        }
+
+        .stars-rating {
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+
+        .table-price-box {
+            flex-direction: row;
+            justify-content: space-between;
+            border-bottom: 1px solid #f1f5f9;
+            padding-bottom: 8px !important;
+            margin-bottom: 8px;
+        }
+
+            .table-price-box::before {
+                content: attr(data-label);
+                font-size: 10.5px;
+                font-weight: 700;
+                text-transform: uppercase;
+                color: #64748b;
+                letter-spacing: 0.5px;
+            }
+
+        .btn-table-rent {
+            height: 30px;
+            padding: 0 10px;
+        }
+    }
+</style>
+
+<section class="premium-pricing-section">
+
+    <!-- Arkada, metinlerin ALTINDA kayan dekoratif araba -->
+    <div class="road-car-decor" aria-hidden="true">
+        <svg viewBox="0 0 140 70" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="carBodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#93c5fd" />
+                    <stop offset="55%" stop-color="#3b82f6" />
+                    <stop offset="100%" stop-color="#1d4ed8" />
+                </linearGradient>
+                <radialGradient id="wheelGlow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#93c5fd" stop-opacity="0.85" />
+                    <stop offset="100%" stop-color="#2563eb" stop-opacity="0" />
+                </radialGradient>
+            </defs>
+            <path d="M15,45 C15,35 25,30 35,28 L55,18 C65,13 80,13 90,18 L108,28 C118,30 128,35 128,45 L128,48 C128,52 124,52 120,52 L18,52 C14,52 15,48 15,45 Z" fill="url(#carBodyGrad)" />
+            <path d="M50,27 L62,19 C68,16 76,16 82,19 L92,27 Z" fill="#0f172a" opacity="0.35" />
+            <circle cx="40" cy="52" r="13" fill="url(#wheelGlow)" />
+            <circle cx="105" cy="52" r="13" fill="url(#wheelGlow)" />
+            <circle cx="40" cy="52" r="7" fill="#0f172a" stroke="#60a5fa" stroke-width="1.5" />
+            <circle cx="105" cy="52" r="7" fill="#0f172a" stroke="#60a5fa" stroke-width="1.5" />
+            <circle cx="40" cy="52" r="2.4" fill="#93c5fd" />
+            <circle cx="105" cy="52" r="2.4" fill="#93c5fd" />
+        </svg>
+    </div>
+
+    <div class="container">
+
+        <div class="pricing-header">
+            <h2>Fiyat Tarifelerimiz</h2>
+            <p>Seçkin araç filomuzu günlük, haftalık veya aylık periyotlarla karşılaştırın. Sizin için en uygun teklifi hemen seçin.</p>
+            <div class="accent-line-luxury"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="luxury-table-responsive">
+                    <table class="luxury-pricing-table">
+                        <thead>
+                            <tr>
+                                <th>&nbsp;</th>
+                                <th class="align-left">Model Detayları & Derecelendirme</th>
+                                <th>Günlük</th>
+                                <th>Haftalık</th>
+                                <th>Aylık</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model ?? new List<ResultCarPricingListWithModelDto>())
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="table-car-image-box">
+                                            <div class="img-fluid" style="background-image:url('@item.CoverImageUrl');"></div>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="table-product-info">
+                                            <h3><a href="/Car/CarDetail/@item.CarId">@item.BrandName @item.Model</a></h3>
+                                            <div class="stars-rating">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <span>Yüksek Memnuniyet</span>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="table-price-box daily" data-label="Günlük Fiyat">
+                                            <div class="price-amount">
+                                                <small>₺</small>@item.DailyAmount
+                                            </div>
+                                            <a href="/Reservation/Index/@item.CarId" class="btn-table-rent">Rezerve Et</a>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="table-price-box weekly" data-label="Haftalık Fiyat">
+                                            <div class="price-amount">
+                                                <small>₺</small>@item.WeeklyAmount
+                                            </div>
+                                            <a href="/Reservation/Index/@item.CarId" class="btn-table-rent">Rezerve Et</a>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="table-price-box monthly" data-label="Aylık Fiyat">
+                                            <div class="price-amount">
+                                                <small>₺</small>@item.MonthlyAmount
+                                            </div>
+                                            <a href="/Reservation/Index/@item.CarId" class="btn-table-rent">Rezerve Et</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </section>

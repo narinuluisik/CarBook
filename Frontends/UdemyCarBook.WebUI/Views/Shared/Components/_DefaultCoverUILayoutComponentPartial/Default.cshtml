@@ -1,26 +1,419 @@
 ﻿@model List<ResultBannerDto>
-@foreach(var item in Model)
-{
-    <div class="hero-wrap ftco-degree-bg" style="background-image: url('/carbook-master/images/bg_1.jpg');" data-stellar-background-ratio="0.5">
-        <div class="overlay"></div>
-        <div class="container">
-            <div class="row no-gutters slider-text justify-content-start align-items-center justify-content-center">
-                <div class="col-lg-8 ftco-animate">
-                    <div class="text w-100 text-center mb-md-5 pb-md-5">
-                        <h1 class="mb-4">@item.Title</h1>
-                        <p style="font-size: 18px;">@item.Description</p>
-                        <a href="@item.VideoUrl" class="icon-wrap popup-vimeo d-flex align-items-center mt-4 justify-content-center">
-                            <div class="icon d-flex align-items-center justify-content-center">
-                                <span class="ion-ios-play"></span>
-                            </div>
-                            <div class="heading-title ml-5">
-                                <span>@item.VideoDescription</span>
-                            </div>
-                        </a>
+@{
+    var banner = Model?.FirstOrDefault();
+    var locations = ViewBag.v as List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> ?? new List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>();
+}
+
+<style>
+    @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+    /* --- HERO & BANNER ALANI --- */
+    .hero-unified {
+        position: relative;
+        padding: 8rem 0 10rem 0;
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .hero-unified-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(1, 14, 34, 0.85) 0%, rgba(10, 37, 74, 0.7) 100%);
+        z-index: 1;
+    }
+
+    .hero-unified-container {
+        position: relative;
+        z-index: 2;
+    }
+
+    .hero-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(0, 86, 179, 0.2);
+        border: 1px solid rgba(0, 86, 179, 0.4);
+        color: #ffffff;
+        padding: 8px 16px;
+        border-radius: 30px;
+        font-size: 13px;
+        font-weight: 500;
+        margin-bottom: 25px;
+        letter-spacing: 0.5px;
+    }
+
+    .hero-title {
+        font-size: 52px;
+        font-weight: 800;
+        color: #ffffff;
+        line-height: 1.2;
+        margin-bottom: 20px;
+        letter-spacing: -1px;
+    }
+
+    .hero-subtitle {
+        font-size: 18px;
+        color: rgba(255, 255, 255, 0.8);
+        font-weight: 300;
+        margin-bottom: 35px;
+        line-height: 1.6;
+    }
+
+    /* İstatistik Alanı */
+    .hero-trust {
+        display: flex;
+        gap: 40px;
+        margin-bottom: 30px;
+    }
+
+    .trust-item {
+        display: flex;
+        flex-direction: column;
+    }
+
+        .trust-item strong {
+            font-size: 32px;
+            font-weight: 700;
+            color: #0056b3;
+            text-shadow: 0 0 20px rgba(0, 86, 179, 0.4);
+        }
+
+        .trust-item span {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 400;
+            margin-top: 2px;
+        }
+
+    /* --- PREMIUM REZERVASYON FORMU (Glassmorphism) --- */
+    .booking-card {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        border-radius: 24px;
+        padding: 40px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    }
+
+    .booking-card-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        padding-bottom: 20px;
+    }
+
+        .booking-card-head h3 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #0a254a;
+            margin-bottom: 5px;
+        }
+
+        .booking-card-head p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 0;
+        }
+
+    .booking-card-icon {
+        width: 50px;
+        height: 50px;
+        background: rgba(0, 86, 179, 0.1);
+        color: #0056b3;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+    }
+
+    .booking-field {
+        margin-bottom: 20px;
+    }
+
+        .booking-field label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #0a254a;
+            margin-bottom: 8px;
+        }
+
+            .booking-field label i {
+                color: #0056b3;
+                margin-right: 6px;
+            }
+
+    .booking-form .form-control {
+        height: 50px;
+        background: #ffffff;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 12px;
+        padding: 10px 15px;
+        font-size: 14px;
+        color: #0a254a;
+        box-shadow: none;
+        transition: all 0.3s ease;
+    }
+
+        .booking-form .form-control:focus {
+            border-color: #0056b3;
+            box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.1);
+        }
+
+    .booking-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .booking-submit {
+        width: 100%;
+        height: 54px;
+        background: #0056b3;
+        color: #ffffff;
+        border: none;
+        border-radius: 14px;
+        font-size: 16px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 20px rgba(0, 86, 179, 0.2);
+    }
+
+        .booking-submit:hover {
+            background: #004085;
+            transform: translateY(-2px);
+            box-shadow: 0 15px 25px rgba(0, 86, 179, 0.3);
+        }
+
+    /* --- ADIM ŞERİDİ (Hero Steps) --- */
+    .hero-steps {
+        background: #ffffff;
+        margin-top: -50px;
+        position: relative;
+        z-index: 3;
+        padding: 0;
+    }
+
+    .steps-row {
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 15px 45px rgba(0, 0, 0, 0.06);
+        padding: 30px 40px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border: 1px solid rgba(0, 0, 0, 0.03);
+    }
+
+    .step-box {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .step-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 16px;
+        background: rgba(0, 86, 179, 0.05);
+        color: #0056b3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+    }
+
+    .step-box strong {
+        display: block;
+        font-size: 12px;
+        color: #0056b3;
+        letter-spacing: 1px;
+    }
+
+    .step-box span {
+        font-size: 16px;
+        font-weight: 700;
+        color: #0a254a;
+    }
+
+    .step-arrow {
+        color: rgba(0, 0, 0, 0.15);
+        font-size: 16px;
+    }
+
+    .step-pricing-link {
+        background: #0a254a;
+        color: #ffffff;
+        padding: 12px 24px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        text-decoration: none;
+    }
+
+        .step-pricing-link:hover {
+            background: #0056b3;
+            color: #ffffff;
+        }
+</style>
+
+<section class="hero-unified" style="background-image: url('/carbook-master/images/bg_1.jpg');">
+    <div class="hero-unified-overlay"></div>
+    <div class="container hero-unified-container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 ftco-animate mb-5 mb-lg-0">
+                @if (banner != null)
+                {
+                    <span class="hero-tag">
+                        <i class="fas fa-shield-alt"></i> Güvenilir Araç Kiralama
+                    </span>
+                    <h1 class="hero-title">@banner.Title</h1>
+                    <p class="hero-subtitle">@banner.Description</p>
+
+                    <div class="hero-trust">
+                        <div class="trust-item">
+                            <strong>500+</strong>
+                            <span>Araç Filosu</span>
+                        </div>
+                        <div class="trust-item">
+                            <strong>50+</strong>
+                            <span>Lokasyon</span>
+                        </div>
+                        <div class="trust-item">
+                            <strong>7/24</strong>
+                            <span>Destek</span>
+                        </div>
                     </div>
+
+                    @if (!string.IsNullOrEmpty(banner.VideoUrl))
+                    {
+                        <a href="@banner.VideoUrl" class="hero-video-link popup-vimeo d-inline-flex align-items-center gap-2 text-white text-decoration-none">
+                            <span class="video-btn"><i class="ion-ios-play"></i></span>
+                            @banner.VideoDescription
+                        </a>
+                    }
+                }
+            </div>
+
+            <div class="col-lg-6 ftco-animate">
+                <div class="booking-card" id="booking">
+                    <div class="booking-card-head">
+                        <div>
+                            <h3>Rezervasyon Yapın</h3>
+                            <p>Birkaç adımda aracınızı seçin</p>
+                        </div>
+                        <div class="booking-card-icon">
+                            <i class="fas fa-car"></i>
+                        </div>
+                    </div>
+
+                    <form method="post" asp-action="Index" asp-controller="Default" class="booking-form">
+
+                        <!-- LOKASYONLAR (Yan Yana) -->
+                        <div class="booking-row">
+                            <div class="booking-field">
+                                <label><i class="fas fa-map-marker-alt"></i> Alış Lokasyonu</label>
+                                <select name="PickUpLocationId" id="pick_drop" class="form-control" required>
+                                    <option value="">Alış yeri seçin</option>
+                                    @foreach (var loc in locations)
+                                    {
+                                        <option value="@loc.Value">@loc.Text</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="booking-field">
+                                <label><i class="fas fa-street-view"></i> Varış Lokasyonu</label>
+                                <select name="DropOffLocationId" id="drop_off" class="form-control" required>
+                                    <option value="">Varış yeri seçin</option>
+                                    @foreach (var loc in locations)
+                                    {
+                                        <option value="@loc.Value">@loc.Text</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- TARİHLER -->
+                        <div class="booking-row">
+                            <div class="booking-field">
+                                <label><i class="far fa-calendar-alt"></i> Alış Tarihi</label>
+                                <input type="text" class="form-control" id="book_pick_date" name="PickUpDate" placeholder="GG/AA/YYYY" autocomplete="off">
+                            </div>
+                            <div class="booking-field">
+                                <label><i class="far fa-calendar-check"></i> İade Tarihi</label>
+                                <input type="text" class="form-control" id="book_off_date" name="DropOffDate" placeholder="GG/AA/YYYY" autocomplete="off">
+                            </div>
+                        </div>
+
+                        <!-- SAATLER -->
+                        <div class="booking-row">
+                            <div class="booking-field">
+                                <label><i class="far fa-clock"></i> Alış Saati</label>
+                                <input type="text" class="form-control" id="time_pick" name="PickUpTime" placeholder="09:00" autocomplete="off">
+                            </div>
+                            <div class="booking-field">
+                                <label><i class="far fa-clock"></i> İade Saati</label>
+                                <input type="text" class="form-control" id="time_off" name="DropOffTime" placeholder="18:00" autocomplete="off">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="booking-submit">
+                            Uygun Araçları Bul <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-}
+</section>
 
+<section class="hero-steps">
+    <div class="container">
+        <div class="steps-row">
+            <div class="step-box">
+                <div class="step-icon"><span class="flaticon-route"></span></div>
+                <div>
+                    <strong>01</strong>
+                    <span>Lokasyon Seçin</span>
+                </div>
+            </div>
+            <div class="step-arrow"><i class="fas fa-chevron-right"></i></div>
+            <div class="step-box">
+                <div class="step-icon"><span class="flaticon-handshake"></span></div>
+                <div>
+                    <strong>02</strong>
+                    <span>Aracınızı Seçin</span>
+                </div>
+            </div>
+            <div class="step-arrow"><i class="fas fa-chevron-right"></i></div>
+            <div class="step-box">
+                <div class="step-icon"><span class="flaticon-rent"></span></div>
+                <div>
+                    <strong>03</strong>
+                    <span>Yola Çıkın</span>
+                </div>
+            </div>
+            <a href="/CarPricing/Index/" class="step-pricing-link">
+                Fiyatları Gör <i class="fas fa-external-link-alt"></i>
+            </a>
+        </div>
+    </div>
+</section>

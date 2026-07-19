@@ -1,60 +1,418 @@
-﻿<section class="ftco-counter ftco-section img bg-light py-5" id="section-counter">
-    <div class="overlay"></div>
+﻿<style>
+    @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+    /* --- İSTATİSTİK ALANI (Premium Koyu Tema) --- */
+    .homepage-stats {
+        position: relative;
+        padding: 5rem 0;
+        font-family: 'Poppins', sans-serif;
+        background: #061329;
+        overflow: hidden;
+    }
+
+        .homepage-stats::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+            background-size: 36px 36px;
+            -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, #000 50%, transparent 100%);
+            mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, #000 50%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .homepage-stats::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            left: -100px;
+            bottom: -100px;
+            background: radial-gradient(circle, rgba(0, 168, 204, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .homepage-stats .container {
+            position: relative;
+            z-index: 2;
+        }
+
+    /* --- ARABA: kutuların kenarlarını takip ediyor, ayrı bir yol çizgisi yok --- */
+    #statsCarLayer {
+        position: absolute;
+        inset: 0;
+        z-index: 3;
+        pointer-events: none;
+    }
+
+    #statsCarShadow {
+        position: absolute;
+        width: 26px;
+        height: 7px;
+        background: radial-gradient(ellipse at center, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 72%);
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    #statsMovingCar {
+        position: absolute;
+        transform: translate(-50%, -50%) scale(0.72);
+        will-change: left, top, transform;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .homepage-stats.is-triggered #statsMovingCar,
+    .homepage-stats.is-triggered #statsCarShadow {
+        opacity: 1;
+    }
+
+    /* --- PREMİUM KOYU KARTLAR --- */
+    .homepage-stats .stat-card {
+        position: relative;
+        z-index: 2;
+        background: #020b18;
+        border-radius: 16px;
+        padding: 35px 20px;
+        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s ease, border-color 0.35s ease;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .homepage-stats .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 24px;
+            right: 24px;
+            height: 3px;
+            border-radius: 0 0 3px 3px;
+            background: linear-gradient(90deg, #0056b3, #00a8cc);
+            opacity: 0.9;
+        }
+
+        .homepage-stats .stat-card .card-corner {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border: 2px solid transparent;
+            transition: all 0.35s ease;
+            pointer-events: none;
+            opacity: 0.4;
+        }
+
+        .homepage-stats .stat-card .corner-tl {
+            top: 12px;
+            left: 12px;
+            border-top-color: #0056b3;
+            border-left-color: #0056b3;
+        }
+
+        .homepage-stats .stat-card .corner-br {
+            bottom: 12px;
+            right: 12px;
+            border-bottom-color: #00a8cc;
+            border-right-color: #00a8cc;
+        }
+
+        .homepage-stats .stat-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.6);
+            border-color: rgba(0, 168, 204, 0.35);
+            background: #031124;
+        }
+
+            .homepage-stats .stat-card:hover .card-corner {
+                opacity: 1;
+                width: 12px;
+                height: 12px;
+            }
+
+        .homepage-stats .stat-card .icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.04);
+            color: #00a8cc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .homepage-stats .stat-card:hover .icon {
+            background: linear-gradient(135deg, #0056b3, #00a8cc);
+            color: #ffffff;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(0, 168, 204, 0.3);
+        }
+
+        .homepage-stats .stat-card .number {
+            font-size: 34px;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.2;
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
+        }
+
+        .homepage-stats .stat-card .label {
+            font-size: 13px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+    @@media (max-width: 767px) {
+        .homepage-stats {
+            padding: 4rem 0;
+        }
+
+        #statsCarLayer {
+            display: none;
+        }
+    }
+</style>
+
+<section class="homepage-stats" id="section-counter">
+
+    <!-- Araba katmanı: kutuların kenarlarını takip eder (görünür yol çizgisi yok) -->
+    <div id="statsCarLayer">
+        <div id="statsCarShadow"></div>
+        <div id="statsMovingCar">
+            <svg width="40" height="20" viewBox="0 0 52 26" fill="none">
+                <defs>
+                    <linearGradient id="statsCarBodyGrad" x1="0" y1="0" x2="0" y2="26" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stop-color="#1a3a5c" />
+                        <stop offset="45%" stop-color="#0d2440" />
+                        <stop offset="100%" stop-color="#061329" />
+                    </linearGradient>
+                    <linearGradient id="statsCarGlassGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#8fdcf0" />
+                        <stop offset="100%" stop-color="#1c5f78" />
+                    </linearGradient>
+                    <radialGradient id="statsHeadlightGlow" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95" />
+                        <stop offset="100%" stop-color="#00a8cc" stop-opacity="0" />
+                    </radialGradient>
+                </defs>
+                <ellipse cx="50" cy="16" rx="16" ry="6" fill="url(#statsHeadlightGlow)" opacity="0.5" />
+                <path d="M2 17.5C2 17.5 3 20 6 20H46C49 20 50 17.5 50 17.5L47 12C45.5 10 41 8.5 36 8H16C11 8.5 6.5 10 5 12L2 17.5Z" fill="url(#statsCarBodyGrad)" stroke="#00a8cc" stroke-width="1.1" />
+                <path d="M13 8.2C14.5 5 18 3.2 22 3.1H30C34 3.2 37 5.2 38.3 8.2H13Z" fill="url(#statsCarBodyGrad)" stroke="#00a8cc" stroke-width="1" />
+                <path d="M15.3 7.6C16.6 5.4 18.9 4.1 21.5 4H23.5V7.6H15.3Z" fill="url(#statsCarGlassGrad)" />
+                <path d="M25 4H28.8C31.3 4.1 33.5 5.4 34.8 7.6H25V4Z" fill="url(#statsCarGlassGrad)" />
+                <rect x="46.3" y="13.5" width="3" height="3" rx="1" fill="#fff7d6" />
+                <rect x="2.5" y="13.8" width="2.4" height="2.4" rx="0.8" fill="#ff5b5b" />
+                <path d="M4 14.5H48" stroke="#00a8cc" stroke-width="0.6" opacity="0.5" />
+                <circle cx="13.5" cy="20" r="4.3" fill="#08131f" stroke="#00a8cc" stroke-width="1" />
+                <circle cx="13.5" cy="20" r="1.8" fill="#0056b3" />
+                <circle cx="38.5" cy="20" r="4.3" fill="#08131f" stroke="#00a8cc" stroke-width="1" />
+                <circle cx="38.5" cy="20" r="1.8" fill="#0056b3" />
+            </svg>
+        </div>
+    </div>
+
     <div class="container">
         <div class="row justify-content-center text-center">
 
-            <!-- Toplam Araç Sayısı -->
+            <!-- Toplam Araç -->
             <div class="col-md-6 col-lg-3 mb-4 mb-lg-0 counter-wrap ftco-animate">
-                <div class="block-18 p-4 shadow-sm rounded bg-white h-100 d-flex flex-column align-items-center justify-content-center">
-                    <div class="icon mb-3 text-primary" style="font-size: 2.5rem;">
-                        <i class="fas fa-car"></i>
-                    </div>
-                    <div class="text d-flex flex-column align-items-center">
-                        <strong class="number display-4 font-weight-bold text-dark mb-2" data-number="@ViewBag.carCount">0</strong>
-                        <span class="text-muted font-weight-medium text-uppercase small tracking-wider">Toplam Araç Sayısı</span>
-                    </div>
+                <div class="stat-card">
+                    <div class="card-corner corner-tl"></div>
+                    <div class="card-corner corner-br"></div>
+
+                    <div class="icon"><i class="fas fa-car"></i></div>
+                    <strong class="number" data-number="@ViewBag.carCount">0</strong>
+                    <span class="label">Toplam Araç</span>
                 </div>
             </div>
 
-            <!-- Lokasyon Sayısı -->
+            <!-- Lokasyon -->
             <div class="col-md-6 col-lg-3 mb-4 mb-lg-0 counter-wrap ftco-animate">
-                <div class="block-18 p-4 shadow-sm rounded bg-white h-100 d-flex flex-column align-items-center justify-content-center">
-                    <div class="icon mb-3 text-success" style="font-size: 2.5rem;">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <div class="text d-flex flex-column align-items-center">
-                        <strong class="number display-4 font-weight-bold text-dark mb-2" data-number="@ViewBag.locationCount">0</strong>
-                        <span class="text-muted font-weight-medium text-uppercase small tracking-wider">Lokasyon Sayısı</span>
-                    </div>
+                <div class="stat-card">
+                    <div class="card-corner corner-tl"></div>
+                    <div class="card-corner corner-br"></div>
+
+                    <div class="icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <strong class="number" data-number="@ViewBag.locationCount">0</strong>
+                    <span class="label">Lokasyon</span>
                 </div>
             </div>
 
-            <!-- Marka Sayısı -->
+            <!-- Marka -->
             <div class="col-md-6 col-lg-3 mb-4 mb-md-0 counter-wrap ftco-animate">
-                <div class="block-18 p-4 shadow-sm rounded bg-white h-100 d-flex flex-column align-items-center justify-content-center">
-                    <div class="icon mb-3 text-info" style="font-size: 2.5rem;">
-                        <i class="fas fa-tags"></i>
-                    </div>
-                    <div class="text d-flex flex-column align-items-center">
-                        <strong class="number display-4 font-weight-bold text-dark mb-2" data-number="@ViewBag.brandCount">0</strong>
-                        <span class="text-muted font-weight-medium text-uppercase small tracking-wider">Marka Sayısı</span>
-                    </div>
+                <div class="stat-card">
+                    <div class="card-corner corner-tl"></div>
+                    <div class="card-corner corner-br"></div>
+
+                    <div class="icon"><i class="fas fa-tags"></i></div>
+                    <strong class="number" data-number="@ViewBag.brandCount">0</strong>
+                    <span class="label">Marka</span>
                 </div>
             </div>
 
-            <!-- Elektrikli Araç Sayısı -->
+            <!-- Elektrikli Araç -->
             <div class="col-md-6 col-lg-3 counter-wrap ftco-animate">
-                <div class="block-18 p-4 shadow-sm rounded bg-white h-100 d-flex flex-column align-items-center justify-content-center">
-                    <div class="icon mb-3 text-warning" style="font-size: 2.5rem;">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <div class="text d-flex flex-column align-items-center">
-                        <strong class="number display-4 font-weight-bold text-dark mb-2" data-number="@ViewBag.carCountByFuelElectric">0</strong>
-                        <span class="text-muted font-weight-medium text-uppercase small tracking-wider">Elektrikli Araç</span>
-                    </div>
+                <div class="stat-card">
+                    <div class="card-corner corner-tl"></div>
+                    <div class="card-corner corner-br"></div>
+
+                    <div class="icon"><i class="fas fa-bolt"></i></div>
+                    <strong class="number" data-number="@ViewBag.carCountByFuelElectric">0</strong>
+                    <span class="label">Elektrikli Araç</span>
                 </div>
             </div>
 
         </div>
     </div>
 </section>
+
+<!-- İSTATİSTİK SAYAÇ + KUTU KENARLARINI TAKİP EDEN ARABA -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const section = document.getElementById('section-counter');
+        if (!section) return;
+
+        /* ---- 1) SAYAÇ ANİMASYONU ---- */
+        function animateCounters() {
+            const numbers = section.querySelectorAll('.number');
+            numbers.forEach(function (el) {
+                const target = parseInt(el.getAttribute('data-number'), 10) || 0;
+                const duration = 1600;
+                const startTime = performance.now();
+
+                function tick(now) {
+                    const progress = Math.min((now - startTime) / duration, 1);
+                    const eased = 1 - Math.pow(1 - progress, 3);
+                    el.textContent = Math.floor(eased * target).toLocaleString('tr-TR');
+                    if (progress < 1) {
+                        requestAnimationFrame(tick);
+                    } else {
+                        el.textContent = target.toLocaleString('tr-TR');
+                    }
+                }
+                requestAnimationFrame(tick);
+            });
+        }
+
+        /* ---- 2) ARABA: kutuların kenarlarını takip eden rota ----
+           Görünür bir yol/çizgi yok. Araba her kutunun üst kenarından
+           sağa gider, sağ kenardan aşağı iner, sonra bir sonraki kutunun
+           üst-sol köşesine çıkıp aynı hareketi tekrarlar. */
+        const car = document.getElementById('statsMovingCar');
+        const shadow = document.getElementById('statsCarShadow');
+        const carLayer = document.getElementById('statsCarLayer');
+        let waypoints = [];
+        let carStarted = false;
+        let countersStarted = false;
+
+        function buildWaypoints() {
+            const cards = section.querySelectorAll('.stat-card');
+            if (!cards.length || !carLayer) return [];
+
+            const layerRect = carLayer.getBoundingClientRect();
+            const pts = [];
+
+            cards.forEach(function (card) {
+                const r = card.getBoundingClientRect();
+                const left = r.left - layerRect.left;
+                const right = r.right - layerRect.left;
+                const top = r.top - layerRect.top;
+                const bottom = r.bottom - layerRect.top;
+
+                pts.push({ x: left, y: top });      // üst-sol köşe
+                pts.push({ x: right, y: top });      // sağa git (üst kenar)
+                pts.push({ x: right, y: bottom });   // aşağı in (sağ kenar)
+            });
+
+            return pts;
+        }
+
+        function distance(a, b) {
+            return Math.hypot(b.x - a.x, b.y - a.y);
+        }
+
+        function playCarLoop() {
+            waypoints = buildWaypoints();
+            if (waypoints.length < 2) return;
+
+            const segLengths = [];
+            let total = 0;
+            for (let i = 0; i < waypoints.length; i++) {
+                const a = waypoints[i];
+                const b = waypoints[(i + 1) % waypoints.length];
+                const len = distance(a, b);
+                segLengths.push(len);
+                total += len;
+            }
+
+            let progress = 0;
+            const speedPxPerFrame = 1.35;
+
+            function loop() {
+                progress += speedPxPerFrame;
+                if (progress > total) progress -= total;
+
+                let remaining = progress;
+                let segIndex = 0;
+                while (remaining > segLengths[segIndex] && segIndex < segLengths.length - 1) {
+                    remaining -= segLengths[segIndex];
+                    segIndex++;
+                }
+
+                const a = waypoints[segIndex];
+                const b = waypoints[(segIndex + 1) % waypoints.length];
+                const segLen = segLengths[segIndex] || 1;
+                const t = remaining / segLen;
+
+                const x = a.x + (b.x - a.x) * t;
+                const y = a.y + (b.y - a.y) * t;
+                const angle = Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI;
+
+                car.style.left = `${x}px`;
+                car.style.top = `${y}px`;
+                car.style.transform = `translate(-50%, -50%) rotate(${angle}deg) scale(0.72)`;
+
+                if (shadow) {
+                    shadow.style.left = `${x}px`;
+                    shadow.style.top = `${y + 5}px`;
+                    shadow.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
+                }
+
+                requestAnimationFrame(loop);
+            }
+            requestAnimationFrame(loop);
+        }
+
+        window.addEventListener('resize', function () {
+            waypoints = buildWaypoints();
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    section.classList.add('is-triggered');
+                    if (!countersStarted) {
+                        countersStarted = true;
+                        animateCounters();
+                    }
+                    if (!carStarted) {
+                        carStarted = true;
+                        playCarLoop();
+                    }
+                }
+            });
+        }, { threshold: 0.3 });
+
+        observer.observe(section);
+    });
+</script>

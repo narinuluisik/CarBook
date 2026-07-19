@@ -1,20 +1,18 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 @await Component.InvokeAsync("_HeadUILayoutComponentPartial")
-<body>
+<link rel="stylesheet" href="~/css/homepage.css" />
+<link rel="stylesheet" href="~/css/inner-pages.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<body class="homepage">
+    @await Html.PartialAsync("_SuccessToast")
     @await Component.InvokeAsync("_NavbarUILayoutComponentPartial")
-
     @await Component.InvokeAsync("_MainCoverUILayoutComponentPartial")
-
     @RenderBody()
     @await Component.InvokeAsync("_FooterUILayoutComponentPartial")
-
     @await Component.InvokeAsync("_ScriptUILayoutComponentPartial")
-
 </body>
 </html>

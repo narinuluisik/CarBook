@@ -1,33 +1,170 @@
 ﻿@model List<ResultLast5CarsWithBrandsDto>
-<section class="ftco-section ftco-no-pt bg-light">
+
+<style>
+    @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+    /* --- ÖNE ÇIKAN ARAÇLAR BÖLÜMÜ --- */
+    .modern-cars-section {
+        padding: 8rem 0;
+        background: #f8f9fa; /* Temadaki diğer düz beyaz alanlardan ayrışması için hafif soft gri */
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 50px;
+    }
+
+        .section-header .subheading {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 700;
+            color: #0056b3;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .section-header h2 {
+            font-size: 38px;
+            font-weight: 800;
+            color: #0a254a;
+        }
+
+        .section-header p {
+            color: #666;
+            font-size: 15px;
+        }
+
+    /* Modern Araç Kartı */
+    .modern-car-card {
+        background: #ffffff;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+        border: 1px solid rgba(0, 0, 0, 0.02);
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+        .modern-car-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        }
+
+    .car-image {
+        height: 220px;
+        background-size: cover;
+        background-position: center center;
+        position: relative;
+        padding: 20px;
+    }
+
+    .brand-badge {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background: rgba(10, 37, 74, 0.85);
+        backdrop-filter: blur(5px);
+        color: #ffffff;
+        padding: 6px 14px;
+        border-radius: 30px;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    .car-body {
+        padding: 25px;
+    }
+
+    .car-title {
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+
+        .car-title a {
+            color: #0a254a;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+            .car-title a:hover {
+                color: #0056b3;
+            }
+
+    .car-actions {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: 12px;
+    }
+
+    .btn-modern {
+        height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        text-decoration: none;
+    }
+
+    .btn-modern-primary {
+        background: #0056b3;
+        color: #ffffff !important;
+    }
+
+        .btn-modern-primary:hover {
+            background: #004085;
+        }
+
+    .btn-modern-outline {
+        border: 1px solid rgba(10, 37, 74, 0.15);
+        color: #0a254a !important;
+        background: transparent;
+    }
+
+        .btn-modern-outline:hover {
+            background: rgba(10, 37, 74, 0.04);
+            border-color: #0a254a;
+        }
+</style>
+
+<section class="modern-cars-section">
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-12 heading-section text-center ftco-animate mb-5">
-                <span class="subheading">Sizin İçin Önerilerimiz</span>
-                <h2 class="mb-2">Öne Çıkan Araçlar</h2>
-            </div>
+        <div class="section-header ftco-animate">
+            <span class="subheading">Sizin İçin Önerilerimiz</span>
+            <h2>Öne Çıkan Araçlar</h2>
+            <p>En popüler ve güvenilir araçlarımızı keşfedin, hemen rezervasyon yapın.</p>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="carousel-car owl-carousel">
-                    @foreach (var item in Model)
+                    @foreach (var item in Model ?? new List<ResultLast5CarsWithBrandsDto>())
                     {
                         <div class="item">
-                            <div class="car-wrap rounded ftco-animate">
-                                <div class="img rounded d-flex align-items-end" style="background-image: url(@item.CoverImageUrl);">
+                            <div class="modern-car-card">
+                                <div class="car-image" style="background-image: url('@item.CoverImageUrl');">
+                                    <span class="brand-badge">@item.BrandName</span>
                                 </div>
-                                <div class="text">
-                                    <h2 class="mb-0"><a href="#">@item.Model</a></h2>
-                                    <div class="d-flex mb-3">
-                                        <span class="cat">@item.BrandName</span>
-                                        <p class="price ml-auto">12000TL <span>/Günlük</span></p>
+                                <div class="car-body">
+                                    <h3 class="car-title">
+                                        <a href="/Car/CarDetail/@item.CarID">@item.Model</a>
+                                    </h3>
+                                    <div class="car-actions">
+                                        <a href="/Reservation/Index/@item.CarID" class="btn-modern btn-modern-primary">
+                                            <i class="fas fa-key mr-1"></i> Kirala
+                                        </a>
+                                        <a href="/Car/CarDetail/@item.CarID" class="btn-modern btn-modern-outline">
+                                            Detaylar
+                                        </a>
                                     </div>
-                                    <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Aracı Kirala</a> <a href="#" class="btn btn-secondary py-2 ml-1">Detaylar</a></p>
                                 </div>
                             </div>
                         </div>
                     }
-
                 </div>
             </div>
         </div>

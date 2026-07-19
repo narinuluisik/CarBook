@@ -1,55 +1,307 @@
 ﻿@model List<ResultFooterAddressDto>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<script>
-       $(document).ready(function () {
+<style>
+    @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+    /* --- TEMAYA UYUMLU MODERN FOOTER --- */
+    .site-footer.ftco-footer {
+        position: relative;
+        background: linear-gradient(180deg, #0a1830 0%, #061329 100%) !important;
+        font-family: 'Poppins', sans-serif;
+        padding: 6.5rem 0 0 0 !important;
+        overflow: hidden;
+    }
 
-        // btn1: Şartlar ve Koşullar (GÜNCELLENDİ)
+    .site-footer.ftco-footer::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: linear-gradient(rgba(0, 168, 204, 0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 168, 204, 0.035) 1px, transparent 1px);
+        background-size: 34px 34px;
+        pointer-events: none;
+    }
+
+    .site-footer.ftco-footer::after {
+        content: '';
+        position: absolute;
+        width: 480px;
+        height: 480px;
+        left: -140px;
+        bottom: -220px;
+        background: radial-gradient(circle, rgba(0, 86, 179, 0.18) 0%, transparent 70%);
+        pointer-events: none;
+    }
+
+    .site-footer .container {
+        position: relative;
+        z-index: 2;
+    }
+
+    /* Logo */
+    .site-footer .logo {
+        font-size: 26px;
+        font-weight: 800;
+        color: #ffffff !important;
+        text-decoration: none !important;
+        letter-spacing: -0.5px;
+    }
+
+        .site-footer .logo span {
+            color: #00a8cc;
+        }
+
+    .site-footer .ftco-footer-widget p {
+        color: rgba(255, 255, 255, 0.62);
+        font-size: 14.5px;
+        line-height: 1.8;
+        margin-top: 16px;
+        max-width: 300px;
+    }
+
+    /* Başlıklar */
+    .site-footer .ftco-heading-2 {
+        color: #ffffff !important;
+        font-size: 15px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        margin-bottom: 26px !important;
+        position: relative;
+        padding-bottom: 14px;
+    }
+
+        .site-footer .ftco-heading-2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 34px;
+            height: 2.5px;
+            border-radius: 3px;
+            background: linear-gradient(90deg, #0056b3, #00a8cc);
+        }
+
+    /* Sosyal ikonlar */
+    .site-footer .ftco-footer-social {
+        display: flex;
+        gap: 12px;
+        margin-top: 26px !important;
+    }
+
+        .site-footer .ftco-footer-social li {
+            list-style: none;
+        }
+
+        .site-footer .ftco-footer-social a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            background: rgba(255, 255, 255, 0.03);
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.7) !important;
+            transition: all 0.3s ease;
+        }
+
+            .site-footer .ftco-footer-social a:hover {
+                background: linear-gradient(135deg, #0056b3, #00a8cc);
+                border-color: transparent;
+                color: #ffffff !important;
+                transform: translateY(-3px);
+                box-shadow: 0 8px 18px rgba(0, 168, 204, 0.35);
+            }
+
+    /* Hızlı linkler / destek listeleri */
+    .site-footer .ftco-footer-widget ul.list-unstyled li a {
+        color: rgba(255, 255, 255, 0.62) !important;
+        font-size: 14.5px;
+        text-decoration: none !important;
+        display: flex !important;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.25s ease;
+        padding: 8px 0 !important;
+    }
+
+        .site-footer .ftco-footer-widget ul.list-unstyled li a::before {
+            content: '';
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #00a8cc;
+            opacity: 0.5;
+            flex-shrink: 0;
+            transition: all 0.25s ease;
+        }
+
+        .site-footer .ftco-footer-widget ul.list-unstyled li a:hover {
+            color: #ffffff !important;
+            padding-left: 4px !important;
+        }
+
+            .site-footer .ftco-footer-widget ul.list-unstyled li a:hover::before {
+                opacity: 1;
+                box-shadow: 0 0 8px #00a8cc;
+            }
+
+    /* İletişim bloğu */
+    .site-footer .block-23 ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .site-footer .block-23 li {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        margin-bottom: 18px;
+    }
+
+    .site-footer .block-23 .icon {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        border-radius: 10px;
+        background: rgba(0, 168, 204, 0.12);
+        border: 1px solid rgba(0, 168, 204, 0.25);
+        color: #00a8cc;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+    }
+
+    .site-footer .block-23 .text {
+        color: rgba(255, 255, 255, 0.68);
+        font-size: 14px;
+        line-height: 1.6;
+        padding-top: 7px;
+    }
+
+    /* Alt bar */
+    .site-footer .footer-bottom-row {
+        position: relative;
+        z-index: 2;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        margin-top: 20px;
+        padding: 26px 0;
+    }
+
+        .site-footer .footer-bottom-row p {
+            color: rgba(255, 255, 255, 0.45);
+            font-size: 13px;
+            margin-bottom: 0;
+        }
+
+        .site-footer .footer-bottom-row a {
+            color: #00a8cc;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+            .site-footer .footer-bottom-row a:hover {
+                color: #ffffff;
+            }
+
+    @@media (max-width: 767px) {
+        .site-footer.ftco-footer
+
+    {
+        padding: 4.5rem 0 0 0 !important;
+        text-align: center;
+    }
+
+    .site-footer .ftco-heading-2::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .site-footer .ftco-footer-social {
+        justify-content: center;
+    }
+
+    .site-footer .ftco-footer-widget p {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .site-footer .block-23 li {
+        text-align: left;
+    }
+
+    }
+
+    /* Premium Koyu Pop-up Stilleri */
+    .premium-dark-popup {
+        background: #061329 !important;
+        border: 1px solid rgba(0, 168, 204, 0.25) !important;
+        border-radius: 16px !important;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.6) !important;
+    }
+
+    .premium-dark-title {
+        color: #ffffff !important;
+        font-family: 'Poppins', sans-serif;
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+        // Yenilenen temaya tam uyumlu SweetAlert2 konfigürasyonu
+        const darkAlert = Swal.mixin({
+            background: '#061329',
+            color: '#ffffff',
+            confirmButtonColor: '#00a8cc',
+            customClass: {
+                popup: 'premium-dark-popup',
+                title: 'premium-dark-title'
+            }
+        });
+
+        // btn1: Şartlar ve Koşullar
         $(document).on('click', '#btn1', function (e) {
             e.preventDefault();
-            Swal.fire({
+            darkAlert.fire({
                 title: 'Şartlar ve Koşullar',
                 text: 'Araba kiralama sürecine dair tüm hizmet koşullarına rezervasyonun fiziki olarak gerçekleştirileceği ofislerimizde yer alan anlaşma dökümanlarına ulaşabilirsiniz. Keyifli yolculuklar dileriz.',
                 icon: 'info',
-                confirmButtonText: 'Anladım',
-                confirmButtonColor: '#3085d6'
+                confirmButtonText: 'Anladım'
             });
         });
 
-        // btn2: En İyi Fiyat Garantisi (GÜNCELLENDİ)
+        // btn2: En İyi Fiyat Garantisi
         $(document).on('click', '#btn2', function (e) {
             e.preventDefault();
-            Swal.fire({
+            darkAlert.fire({
                 title: 'En İyi Fiyat Garantisi & Güvenlik',
                 text: 'CarBook Web Sitemiz Asp.net Core Teknolojisinde Sha256 şifreleme tekniğiyle tamamen şifreli olarak tutulması alt yapısına sahiptir. Sistemimize JWT doğrulaması yapılmaktadır. Kullanıcılarımızın ödeme yaptıktan sonra kart bilgileri kesinlikle saklanmamaktadır. T.C. Kimlik Numarası gibi bilgiler şifrelenerek tutulmaktadır. Keyifli yolculuklar dileriz.',
                 icon: 'success',
-                confirmButtonText: 'Kapat',
-                confirmButtonColor: '#3085d6'
+                confirmButtonText: 'Kapat'
             });
         });
 
         // btn3: Gizlilik ve Çerez Politikası
         $(document).on('click', '#btn3', function (e) {
             e.preventDefault();
-            Swal.fire({
+            darkAlert.fire({
                 title: 'Gizlilik ve Çerez Politikası',
                 html: `
-                    <div style="text-align: left; max-height: 300px; overflow-y: auto; font-size: 14px; padding: 5px;">
-                        <h5>1. Gizlilik Politikası</h5>
+                    <div style="text-align: left; max-height: 300px; overflow-y: auto; font-size: 14px; padding: 5px; color: rgba(255,255,255,0.8);">
+                        <h5 style="color: #00a8cc;">1. Gizlilik Politikası</h5>
                         <p>Sitemizi ziyaret ettiğinizde paylaştığınız iletişim ve analitik veriler, kullanıcı deneyiminizi iyileştirmek adına yasal çerçevede işlenmektedir. Verileriniz üçüncü şahıslarla paylaşılmaz.</p>
-                        <h5>2. Çerez Politikası</h5>
+                        <h5 style="color: #00a8cc;">2. Çerez Politikası</h5>
                         <p>Sitemizin kararlı çalışması ve performans analizi için zorunlu ve işlevsel çerezler kullanılmaktadır. Tarayıcı ayarlarınızdan bunları dilediğiniz zaman yönetebilirsiniz.</p>
-                        <h5>3. İletişim</h5>
+                        <h5 style="color: #00a8cc;">3. İletişim</h5>
                         <p>Politika ile ilgili sorularınız için bizimle iletişime geçebilirsiniz.</p>
                     </div>
                 `,
                 icon: 'info',
                 confirmButtonText: 'Okudum, Kabul Ediyorum',
-                confirmButtonColor: '#3085d6',
                 width: '600px'
             });
         });
@@ -57,38 +309,36 @@
         // btn4: Sıkça Sorulan Sorular
         $(document).on('click', '#btn4', function (e) {
             e.preventDefault();
-            Swal.fire({
+            darkAlert.fire({
                 title: 'Sıkça Sorulan Sorular',
                 html: `
-                    <div style="text-align: left; max-height: 350px; overflow-y: auto; font-size: 14px; padding: 5px;">
-                        <strong>Q: Araç kiralamak için yaş sınırı nedir?</strong>
+                    <div style="text-align: left; max-height: 350px; overflow-y: auto; font-size: 14px; padding: 5px; color: rgba(255,255,255,0.8);">
+                        <strong style="color: #00a8cc;">Q: Araç kiralamak için yaş sınırı nedir?</strong>
                         <p>A: Ekonomik grup araçlar için en az 21 yaş ve 1 yıllık ehliyet şartı aranmaktadır.</p>
-                        <strong>Q: Depozito (Provizyon) alınıyor mu?</strong>
+                        <strong style="color: #00a8cc;">Q: Depozito (Provizyon) alınıyor mu?</strong>
                         <p>A: Evet, kiralama başlangıcında sürücünün şahsi kredi kartından araç grubuna göre değişen tutarlarda bloke konulmaktadır.</p>
-                        <strong>Q: Yakıt politikanız nedir?</strong>
+                        <strong style="color: #00a8cc;">Q: Yakıt politikanız nedir?</strong>
                         <p>A: Aracı hangi yakıt seviyesinde teslim aldıysanız, aynı seviyede iade etmeniz beklenmektedir.</p>
                     </div>
                 `,
                 icon: 'question',
-                confirmButtonText: 'Kapat',
-                confirmButtonColor: '#3085d6'
+                confirmButtonText: 'Kapat'
             });
         });
 
         // btn5: Ödeme Yöntemleri
         $(document).on('click', '#btn5', function (e) {
             e.preventDefault();
-            Swal.fire({
+            darkAlert.fire({
                 title: 'Ödeme Yöntemleri',
                 html: `
-                    <div style="text-align: left; font-size: 14px;">
-                        <p>Ödemelerinizi web sitemiz üzerinden <strong>Kredi Kartı</strong> veya <strong>Banka Kartı</strong> (3D Secure güvencesiyle) gerçekleştirebilirsiniz.</p>
+                    <div style="text-align: left; font-size: 14px; color: rgba(255,255,255,0.8);">
+                        <p>Ödemelerinizi web sitemiz üzerinden <strong style="color: #00a8cc;">Kredi Kartı</strong> veya <strong style="color: #00a8cc;">Banka Kartı</strong> (3D Secure güvencesiyle) gerçekleştirebilirsiniz.</p>
                         <p>Araç teslimi sırasında sürücü adına kayıtlı geçerli bir kredi kartının ibraz edilmesi zorunludur. Nakit veya senetle kiralama yapılmamaktadır.</p>
                     </div>
                 `,
                 icon: 'info',
-                confirmButtonText: 'Anladım',
-                confirmButtonColor: '#3085d6'
+                confirmButtonText: 'Anladım'
             });
         });
 
@@ -96,7 +346,7 @@
         $(document).on('click', '#btn6', function (e) {
             e.preventDefault();
             let targetUrl = $(this).attr('href');
-            Swal.fire({
+            darkAlert.fire({
                 title: 'Araç Seçimine Gidiyorsunuz',
                 text: 'Güncel araç listemizi ve fiyat tarifelerimizi göreceğiniz sayfaya yönlendiriliyorsunuz.',
                 icon: 'success',
@@ -111,21 +361,20 @@
         // btn7: Nasıl Çalışır
         $(document).on('click', '#btn7', function (e) {
             e.preventDefault();
-            Swal.fire({
+            darkAlert.fire({
                 title: 'Nasıl Çalışır?',
                 html: `
-                    <div style="text-align: left; font-size: 14px; padding: 5px;">
-                        <ol>
-                            <li><strong>Aracını Seç:</strong> Tarih ve konum bilgilerini girip sana en uygun aracı bul.</li>
-                            <li><strong>Bilgilerini Doldur:</strong> Sürücü ve ödeme bilgilerini güvenle gir.</li>
-                            <li><strong>Rezervasyonu Tamamla:</strong> Onay kodun anında e-posta adresine gelsin.</li>
-                            <li><strong>Aracını Teslim Al:</strong> Belirtilen noktadan anahtarını al ve yola çık!</li>
+                    <div style="text-align: left; font-size: 14px; padding: 5px; color: rgba(255,255,255,0.8);">
+                        <ol style="padding-left: 20px;">
+                            <li><strong style="color: #00a8cc;">Aracını Seç:</strong> Tarih ve konum bilgilerini girip sana en uygun aracı bul.</li>
+                            <li><strong style="color: #00a8cc;">Bilgilerini Doldur:</strong> Sürücü ve ödeme bilgilerini güvenle gir.</li>
+                            <li><strong style="color: #00a8cc;">Rezervasyonu Tamamla:</strong> Onay kodun anında e-posta adresine gelsin.</li>
+                            <li><strong style="color: #00a8cc;">Aracını Teslim Al:</strong> Belirtilen noktadan anahtarını al ve yola çık!</li>
                         </ol>
                     </div>
                 `,
                 icon: 'info',
-                confirmButtonText: 'Harika',
-                confirmButtonColor: '#3085d6'
+                confirmButtonText: 'Harika'
             });
         });
 
@@ -133,7 +382,7 @@
         $(document).on('click', '#btn8', function (e) {
             e.preventDefault();
             let targetUrl = $(this).attr('href');
-            Swal.fire({
+            darkAlert.fire({
                 title: 'İletişim Formuna Yönlendiriliyorsunuz',
                 text: 'Sorularınızı, isteklerinizi veya geri bildirimlerinizi bize iletebilirsiniz.',
                 icon: 'info',
@@ -144,18 +393,17 @@
                 }
             });
         });
-
     });
 </script>
 
 @foreach (var item in Model)
 {
-    <footer class="ftco-footer ftco-bg-dark ftco-section">
+    <footer class="site-footer ftco-footer ftco-bg-dark ftco-section">
         <div class="container">
             <div class="row mb-5">
                 <div class="col-md">
                     <div class="ftco-footer-widget mb-4">
-                        <h2 class="ftco-heading-2"><a href="#" class="logo">Car<span>book</span></a></h2>
+                        <h2 class="ftco-heading-2"><a href="/Default/Index/" class="logo">Car<span>book</span></a></h2>
                         <p>@item.Description</p>
                         <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
                             <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
@@ -178,11 +426,11 @@
                 </div>
                 <div class="col-md">
                     <div class="ftco-footer-widget mb-4">
-                        <h2 class="ftco-heading-2">Müşteri Desteği </h2>
+                        <h2 class="ftco-heading-2">Müşteri Desteği</h2>
                         <ul class="list-unstyled">
                             <li><a href="#" id="btn4" class="py-2 d-block">Sıkça sorulanlar</a></li>
                             <li><a href="#" id="btn5" class="py-2 d-block">Ödeme Yöntemleri</a></li>
-                            <li><a href="/CarPricing/Index/" id="btn6" class="py-2 d-block">Kiralama </a></li>
+                            <li><a href="/CarPricing/Index/" id="btn6" class="py-2 d-block">Kiralama</a></li>
                             <li><a href="#" id="btn7" class="py-2 d-block">Nasıl Çalışır</a></li>
                             <li><a href="/Contact/Index/" id="btn8" class="py-2 d-block">Bize Yazın</a></li>
                         </ul>
@@ -201,14 +449,14 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row footer-bottom-row">
                 <div class="col-md-12 text-center">
                     <p>
-                        Copyright &copy;<script>document.write(new Date().getFullYear());</script> Tüm hakları saklıdır | Bu şablon <i class="icon-heart color-danger" aria-hidden="true"></i> ile yapılmıştır <a href="https://colorlib.com" target="_blank">Colorlib</a> tarafından
+                        Copyright &copy;<script>document.write(new Date().getFullYear());</script> Tüm hakları saklıdır| <a href="https://colorlib.com" target="_blank">Narin Uluışık</a> tarafından
                     </p>
                 </div>
             </div>
         </div>
     </footer>
-    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" /><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" /></svg></div>
+    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#0a1830" /><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#00a8cc" /></svg></div>
 }

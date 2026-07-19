@@ -1,8 +1,133 @@
 ﻿@model List<ResultServiceDto>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Hizmetler";
     Layout = "~/Views/UILayout/Index.cshtml";
 }
 
-@await Component.InvokeAsync("_ServiceComponentPartial")
-@await Component.InvokeAsync("_BecomeADriverComponentPartial")
+<style>
+    @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+    /* --- HERO ALTI BİLGİ ŞERİDİ (minimal, taşmayan) --- */
+    .inner-page-bridge {
+        position: relative;
+        font-family: 'Poppins', sans-serif;
+        background: #f7f9fc;
+        border-bottom: 1px solid rgba(10, 37, 74, 0.06);
+    }
+
+    .inner-page-bridge-card {
+        padding: 22px 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        flex-wrap: wrap;
+    }
+
+    .inner-page-bridge-text h2 {
+        font-size: 15px;
+        font-weight: 700;
+        color: #0a254a;
+        letter-spacing: -0.2px;
+        margin-bottom: 2px;
+    }
+
+    .inner-page-bridge-text p {
+        font-size: 12.5px;
+        color: #8a96a8;
+        line-height: 1.5;
+        margin-bottom: 0;
+        max-width: 340px;
+    }
+
+    .inner-page-bridge-stats {
+        display: flex;
+        align-items: center;
+        gap: 0;
+        flex-shrink: 0;
+    }
+
+        .inner-page-bridge-stats .stat {
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+            padding: 0 18px;
+            position: relative;
+        }
+
+            .inner-page-bridge-stats .stat + .stat::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 1px;
+                height: 16px;
+                background: rgba(10, 37, 74, 0.1);
+            }
+
+            .inner-page-bridge-stats .stat strong {
+                font-size: 16px;
+                font-weight: 800;
+                color: #0056b3;
+                line-height: 1;
+            }
+
+            .inner-page-bridge-stats .stat span {
+                font-size: 11px;
+                font-weight: 500;
+                color: #8a96a8;
+            }
+
+    @@media (max-width: 767px) {
+        .inner-page-bridge-card {
+            padding: 18px 0;
+            text-align: center;
+            justify-content: center;
+        }
+
+        .inner-page-bridge-text p {
+            max-width: 100%;
+        }
+
+        .inner-page-bridge-stats {
+            justify-content: center;
+            flex-wrap: wrap;
+            row-gap: 8px;
+            margin-top: 10px;
+        }
+
+            .inner-page-bridge-stats .stat {
+                padding: 0 14px;
+            }
+    }
+</style>
+
+<div class="inner-page-sections inner-page-services">
+    <div class="inner-page-bridge">
+        <div class="container">
+            <div class="inner-page-bridge-card">
+                <div class="inner-page-bridge-text">
+                    <h2>Her ihtiyaca uygun çözümler</h2>
+                    <p>Güvenli, konforlu ve profesyonel araç kiralama deneyimi için ihtiyaç duyduğunuz tüm hizmetler tek çatı altında.</p>
+                </div>
+                <div class="inner-page-bridge-stats">
+                    <div class="stat">
+                        <strong>4+</strong>
+                        <span>Hizmet Alanı</span>
+                    </div>
+                    <div class="stat">
+                        <strong>%100</strong>
+                        <span>Müşteri Odaklı</span>
+                    </div>
+                    <div class="stat">
+                        <strong>7/24</strong>
+                        <span>Yol Desteği</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @await Component.InvokeAsync("_ServiceComponentPartial")
+    @await Component.InvokeAsync("_BecomeADriverComponentPartial")
+</div>

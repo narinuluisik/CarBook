@@ -17,22 +17,30 @@ namespace UdemyCarBook.WebUI.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            ViewBag.v1 = "İletişim";
+            ViewBag.v2 = "Bize Ulaşın";
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Index(CreateContactDto createContactDto)
         {
+            ViewBag.v1 = "İletişim";
+            ViewBag.v2 = "Bize Ulaşın";
+
             var client = _httpClientFactory.CreateClient();
-            createContactDto.SendDate= DateTime.Now;
+            createContactDto.SendDate = DateTime.Now;
             var jsonData = JsonConvert.SerializeObject(createContactDto);
-              StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-                var responseMessage = await client.PostAsync("https://localhost:7087/api/Contacts", stringContent);
+            StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
+            var responseMessage = await client.PostAsync("https://localhost:7087/api/Contacts", stringContent);
             if (responseMessage.IsSuccessStatusCode)
             {
-                return RedirectToAction("Index", "Default");
+                TempData["SuccessMessage"] = "Mesajınız başarıyla gönderildi. En kısa sürede size dönüş yapacağız.";
+                return RedirectToAction("Index");
             }
-            return View();
+
+            ViewBag.ErrorMessage = "Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin.";
+            return View(createContactDto);
         }
        
 

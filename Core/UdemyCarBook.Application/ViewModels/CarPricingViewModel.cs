@@ -12,6 +12,7 @@ namespace UdemyCarBook.Application.ViewModels
         {
         Amounts= new List<decimal>();
         }
+        public int CarId { get; set; }
         public string Model { get; set; }
         public List<decimal> Amounts { get; set; }
         public string CoverImageUrl { get; set; }

@@ -1,11 +1,132 @@
-﻿<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/carbook-master/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
-    <div class="overlay"></div>
-    <div class="container">
-        <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
-            <div class="col-md-9 ftco-animate pb-5">
-                <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Ana Sayfa <i class="ion-ios-arrow-forward"></i></a></span> <span>@ViewBag.v1 <i class="ion-ios-arrow-forward"></i></span></p>
-                <h1 class="mb-3 bread">@ViewBag.v2</h1>
-            </div>
-        </div>
+﻿<style>
+    @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+    .page-hero {
+        position: relative;
+        padding: 130px 0 72px;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        font-family: 'Poppins', sans-serif;
+        overflow: hidden;
+    }
+
+    .page-hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            105deg,
+            rgba(10, 15, 30, 0.94) 0%,
+            rgba(10, 37, 74, 0.82) 45%,
+            rgba(0, 86, 179, 0.55) 100%
+        );
+        z-index: 1;
+    }
+
+    .page-hero-overlay::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image:
+            linear-gradient(rgba(0, 168, 204, 0.04) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 168, 204, 0.04) 1px, transparent 1px);
+        background-size: 36px 36px;
+        pointer-events: none;
+    }
+
+    .page-hero-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .page-hero-breadcrumb {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 18px;
+        font-size: 0.88rem;
+        font-weight: 500;
+    }
+
+    .page-hero-breadcrumb a {
+        color: rgba(255, 255, 255, 0.72);
+        text-decoration: none;
+        transition: color 0.25s ease;
+    }
+
+    .page-hero-breadcrumb a:hover {
+        color: #fff;
+    }
+
+    .page-hero-breadcrumb .divider {
+        color: rgba(255, 255, 255, 0.35);
+        font-size: 0.7rem;
+    }
+
+    .page-hero-breadcrumb .current {
+        color: #93c5fd;
+    }
+
+    .page-hero-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(37, 99, 235, 0.18);
+        border: 1px solid rgba(96, 165, 250, 0.35);
+        color: #93c5fd;
+        font-size: 0.78rem;
+        font-weight: 600;
+        padding: 7px 16px;
+        border-radius: 50px;
+        margin-bottom: 16px;
+        letter-spacing: 0.4px;
+        text-transform: uppercase;
+    }
+
+    .page-hero-title {
+        font-size: clamp(1.9rem, 4vw, 2.75rem);
+        font-weight: 800;
+        color: #fff;
+        line-height: 1.2;
+        letter-spacing: -0.5px;
+        margin: 0;
+        max-width: 720px;
+    }
+
+    .page-hero-accent {
+        display: block;
+        width: 64px;
+        height: 4px;
+        background: linear-gradient(90deg, #2563eb, #06b6d4);
+        border-radius: 4px;
+        margin-top: 22px;
+    }
+
+    @@media (max-width: 767px) {
+        .page-hero {
+            padding: 110px 0 56px;
+        }
+    }
+</style>
+
+<section class="page-hero" style="background-image: url('https://resmim.net/cdn/2026/07/19/EW6z8y.png');">
+    <div class="page-hero-overlay"></div>
+    <div class="container page-hero-content">
+        <nav class="page-hero-breadcrumb" aria-label="breadcrumb">
+            <a href="/Default/Index/"><i class="fas fa-home"></i> Ana Sayfa</a>
+            <span class="divider"><i class="fas fa-chevron-right"></i></span>
+            <span class="current">@ViewBag.v1</span>
+        </nav>
+
+        @if (!string.IsNullOrWhiteSpace(ViewBag.v1 as string))
+        {
+            <span class="page-hero-tag">
+                <i class="fas fa-layer-group"></i> @ViewBag.v1
+            </span>
+        }
+
+        <h1 class="page-hero-title">@ViewBag.v2</h1>
+        <span class="page-hero-accent"></span>
     </div>
 </section>

@@ -31,11 +31,13 @@ namespace UdemyCarBook.Application.Features.Mediator.Handlers.RentACarHandlers
             var result = values.Select(x => new GetRentACarQueryResult
             {
                 CarId = x.CarID,
-                Brand= x.Car.Brand.Name,
-                Model= x.Car.Model,
+                Brand = x.Car.Brand.Name,
+                Model = x.Car.Model,
                 CoverImageUrl = x.Car.CoverImageUrl,
-
-                // Eğer Result sınıfında başka alanlar varsa (Marka, Model vs.) onları da buraya ekleyebilirsin.
+                Amount = x.Car.CarPricings?
+                    .Where(p => p.PricingID == 2)
+                    .Select(p => p.Amount)
+                    .FirstOrDefault() ?? 0
             }).ToList();
 
             return result; // Artık result bir List<> ve Handler da List<> dönüyor. Uyuşmazlık çözüldü!

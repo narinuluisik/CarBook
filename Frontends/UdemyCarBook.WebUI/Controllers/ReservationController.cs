@@ -4,7 +4,6 @@ using Newtonsoft.Json;
 using System.Text;
 using UdemyCarBook.Dto.LocationDtos;
 using UdemyCarBook.Dto.ReservationDtos;
-using UdemyCarBook.Dto.TestimonialDtos;
 
 namespace UdemyCarBook.WebUI.Controllers
 {
@@ -29,12 +28,19 @@ namespace UdemyCarBook.WebUI.Controllers
 
             var jsonData = await responseMessage.Content.ReadAsStringAsync();
 
-            var values = JsonConvert.DeserializeObject<List<ResultLocationDto>>(jsonData);
+            var values = JsonConvert.DeserializeObject<List<ResultLocationDto>>(jsonData) ?? new List<ResultLocationDto>();
+
+            int? selectedLocationId = null;
+            if (TempData["locationID"] != null && int.TryParse(TempData["locationID"]?.ToString(), out int locId))
+            {
+                selectedLocationId = locId;
+            }
 
             List<SelectListItem> values2 = values.Select(x => new SelectListItem
             {
                 Text = x.Name,
-                Value = x.LocationID.ToString()
+                Value = x.LocationID.ToString(),
+                Selected = selectedLocationId.HasValue && x.LocationID == selectedLocationId.Value
             }).ToList();
 
             ViewBag.v = values2;
@@ -51,9 +57,10 @@ namespace UdemyCarBook.WebUI.Controllers
             var responseMessage = await client.PostAsync("https://localhost:7087/api/Reservation", stringContent);
             if (responseMessage.IsSuccessStatusCode)
             {
+                TempData["SuccessMessage"] = "Rezervasyonunuz başarıyla alındı. En kısa sürede sizinle iletişime geçeceğiz.";
                 return RedirectToAction("Index", "Default");
             }
-            return View();
+            return View(createReservationDto);
         }
     }
 }

@@ -1,32 +1,37 @@
 ﻿
 @{
-    ViewData["Title"] = "CarDetail";
+    ViewData["Title"] = "Araç Detayı";
     Layout = "~/Views/UILayout/Index.cshtml";
 }
 
+<section class="intro-strip">
+    <div class="container intro-strip-inner">
+        <div>
+            <h3>Detaylı araç incelemesi</h3>
+            <p>Teknik özellikler, açıklamalar ve kullanıcı yorumlarını tek ekranda inceleyin.</p>
+        </div>
+        <div class="intro-strip-stats">
+            <div class="stat-item"><strong>500+</strong><span>Araç Filosu</span></div>
+            <div class="stat-divider"></div>
+            <div class="stat-item"><strong>50+</strong><span>Lokasyon</span></div>
+            <div class="stat-divider"></div>
+            <div class="stat-item"><strong>7/24</strong><span>Destek</span></div>
+        </div>
+    </div>
+</section>
 
+@await Component.InvokeAsync("_CarDetailMainCarFeatureComponentPartial", new { id = ViewBag.carid })
 
-<section class="ftco-section ftco-car-details">
-	<div class="container">
-		@await Component.InvokeAsync("_CarDetailMainCarFeatureComponentPartial", new { id = ViewBag.carid })
-		<div class="row">
-			<div class="col-md-12 pills">
-				<div class="bd-example bd-example-tabs">
-					@await Component.InvokeAsync("_CarDetailTabPPaneComponentPartial")
+<section class="car-detail-tabs-section">
+    <div class="container">
+        <div class="car-detail-tabs-card">
+            @await Component.InvokeAsync("_CarDetailTabPPaneComponentPartial")
 
-					
-
-					<div class="tab-content" id="pills-tabContent">
-						@await Component.InvokeAsync("_CarDetailCarFeatureByCarIdComponentPartial", new { id = ViewBag.carid })
-						@await Component.InvokeAsync("_CarDetailCarDesriptionByCarIdComponentPartial", new { id = ViewBag.carid })
-						@await Component.InvokeAsync("_CarDetailCommentsByIdComponentPartial", new { id = ViewBag.carid })
-
-						
-
-
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+            <div class="tab-content" id="pills-tabContent">
+                @await Component.InvokeAsync("_CarDetailCarFeatureByCarIdComponentPartial", new { id = ViewBag.carid })
+                @await Component.InvokeAsync("_CarDetailCarDesriptionByCarIdComponentPartial", new { id = ViewBag.carid })
+                @await Component.InvokeAsync("_CarDetailCommentsByIdComponentPartial", new { id = ViewBag.carid })
+            </div>
+        </div>
+    </div>
 </section>

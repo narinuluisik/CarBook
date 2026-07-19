@@ -1,29 +1,35 @@
 ﻿
 @{
-    ViewData["Title"] = "BlogDetail";
+    ViewData["Title"] = "Blog Detayı";
     Layout = "~/Views/UILayout/Index.cshtml";
 }
 
-<section class="ftco-section ftco-degree-bg">
+<section class="intro-strip">
+    <div class="container intro-strip-inner">
+        <div>
+            <h3>Okumaya devam edin</h3>
+            <p>Detaylı içerik, yazar bilgisi ve okuyucu yorumlarıyla blog deneyimini keşfedin.</p>
+        </div>
+        <div class="intro-strip-stats">
+            <div class="stat-item"><strong>500+</strong><span>Araç Filosu</span></div>
+            <div class="stat-divider"></div>
+            <div class="stat-item"><strong>50+</strong><span>Lokasyon</span></div>
+            <div class="stat-divider"></div>
+            <div class="stat-item"><strong>7/24</strong><span>Destek</span></div>
+        </div>
+    </div>
+</section>
+
+<section class="blog-detail-section">
     <div class="container">
         <div class="row">
             @await Component.InvokeAsync("_BlogDetailMainComponentPartial", new { id = ViewBag.BlogID })
 
-            <div class="col-md-4 sidebar ftco-animate">
-                @await Component.InvokeAsync("_BlogDetailSidebarSearchBoxComponentPartial")
-   
+            <div class="col-lg-4">
                 @await Component.InvokeAsync("_BlogDetailCategoryViewComponentPartial")
                 @await Component.InvokeAsync("_BlogDetailsRecentBlogComponentPartial")
-                @await Component.InvokeAsync("_BlogDetailTagCloudComponentPartial" , new { id = ViewBag.BlogID })
-                @await Component.InvokeAsync("_BlogDetailParagrafComponentPartial")
-               
-
-
-
-            
-
-          </div>
-
+                @await Component.InvokeAsync("_BlogDetailTagCloudComponentPartial", new { id = ViewBag.BlogID })
+            </div>
         </div>
     </div>
-</section> <!-- .section -->
+</section>

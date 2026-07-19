@@ -27,7 +27,11 @@ namespace UdemyCarBook.WebUI.Controllers
                 return RedirectToAction("Index", "Default");
             }
 
+            ViewBag.v1 = "Araç Kiralama";
+            ViewBag.v2 = "Uygun Araçları Listele";
+
             ViewBag.locationID = id;
+            TempData["locationID"] = id;
 
             var client = _httpClientFactory.CreateClient();
             string apiUrl = $"https://localhost:7087/api/RentACars?locationID={id}&available=true";

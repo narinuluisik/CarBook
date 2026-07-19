@@ -44,16 +44,33 @@ namespace UdemyCarBook.WebUI.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Index(string book_pick_date, string book_off_date, string time_pick, string time_off, string LocationID)
+        public IActionResult Index(
+            string book_pick_date, string book_off_date, string time_pick, string time_off,
+            string LocationID, string locationID,
+            string PickUpDate, string DropOffDate, string PickUpTime, string DropOffTime,
+            string PickUpLocationId, string DropOffLocationId)
         {
-            TempData["bookpickdate"] = book_pick_date;
-            TempData["bookoffdate"] = book_off_date;
-            TempData["timepick"] = time_pick;
-            TempData["timeoff"] = time_off;
+            var pickDate = !string.IsNullOrEmpty(book_pick_date) ? book_pick_date : PickUpDate;
+            var offDate = !string.IsNullOrEmpty(book_off_date) ? book_off_date : DropOffDate;
+            var pickTime = !string.IsNullOrEmpty(time_pick) ? time_pick : PickUpTime;
+            var offTime = !string.IsNullOrEmpty(time_off) ? time_off : DropOffTime;
+            var locId = !string.IsNullOrEmpty(LocationID) ? LocationID
+                : !string.IsNullOrEmpty(locationID) ? locationID
+                : PickUpLocationId;
 
-            // Büyük harfli LocationID parametresini güvenle parse edip yönlendiriyoruz
-            if (!string.IsNullOrEmpty(LocationID) && int.TryParse(LocationID, out int parsedId))
+            TempData["bookpickdate"] = pickDate;
+            TempData["bookoffdate"] = offDate;
+            TempData["timepick"] = pickTime;
+            TempData["timeoff"] = offTime;
+
+            if (!string.IsNullOrEmpty(DropOffLocationId))
             {
+                TempData["dropOffLocationID"] = DropOffLocationId;
+            }
+
+            if (!string.IsNullOrEmpty(locId) && int.TryParse(locId, out int parsedId))
+            {
+                TempData["locationID"] = parsedId;
                 return RedirectToAction("Index", "RentACarList", new { id = parsedId });
             }
 
