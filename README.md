@@ -44,35 +44,35 @@ Bu yapı sayesinde uygulamanın **bakımı kolaylaşmış**, **test edilebilirli
 
 ## 🏠 Ana Sayfa
 
-![Ana Sayfa] <img width="1920" height="8287" alt="image" src="https://github.com/user-attachments/assets/5bccbfbd-7e14-4369-b483-264de0951a0a" />
+ <img width="1920" height="8287" alt="image" src="https://github.com/user-attachments/assets/5bccbfbd-7e14-4369-b483-264de0951a0a" />
 
 
 ---
 
 ## 🚗 Araç Listeleme
 
-![Araçlar] <img width="1920" height="2893" alt="image" src="https://github.com/user-attachments/assets/65f4626f-9f10-40cb-abfe-bd9ccd35bb21" />
+ <img width="1920" height="2893" alt="image" src="https://github.com/user-attachments/assets/65f4626f-9f10-40cb-abfe-bd9ccd35bb21" />
 
 
 ---
 
 ## 🚘 Araç Detay Sayfası
 
-![Araç Detay] <img width="1920" height="2953" alt="image" src="https://github.com/user-attachments/assets/74f2e87f-57a6-48f5-91f5-e7eda7beb860" />
+ <img width="1920" height="2953" alt="image" src="https://github.com/user-attachments/assets/74f2e87f-57a6-48f5-91f5-e7eda7beb860" />
 
 
 ---
 
 ## 📅 Fiyatlarımız Sayfası
 
-![Fiyatlar] <img width="1920" height="2821" alt="image" src="https://github.com/user-attachments/assets/ed024254-e862-4ae7-a875-bac6537bc490" />
+ <img width="1920" height="2821" alt="image" src="https://github.com/user-attachments/assets/ed024254-e862-4ae7-a875-bac6537bc490" />
 
 
 ---
 
 ## 📄 Blog Detay Sayfası
 
-![Blog Detay] <img width="1920" height="4148" alt="image" src="https://github.com/user-attachments/assets/b7883d92-5d34-46e6-808f-23c30fa6a165" />
+<img width="1920" height="4148" alt="image" src="https://github.com/user-attachments/assets/b7883d92-5d34-46e6-808f-23c30fa6a165" />
 
 
 ---
@@ -85,21 +85,21 @@ Bu yapı sayesinde uygulamanın **bakımı kolaylaşmış**, **test edilebilirli
 
 ## 📊 Dashboard
 
-![Dashboard] <img width="1920" height="1483" alt="image" src="https://github.com/user-attachments/assets/506b667a-ebf4-4d64-ac43-8fd6d92a23d0" />
+ <img width="1920" height="1483" alt="image" src="https://github.com/user-attachments/assets/506b667a-ebf4-4d64-ac43-8fd6d92a23d0" />
 
 
 ---
 
 ## 🚗 Araç Yönetimi
 
-![Araç Yönetimi] <img width="1920" height="1048" alt="image" src="https://github.com/user-attachments/assets/e93ddfc4-9dfa-4723-abb7-02f431688b81" />
+ <img width="1920" height="1048" alt="image" src="https://github.com/user-attachments/assets/e93ddfc4-9dfa-4723-abb7-02f431688b81" />
 
 
 ---
 
 ## 🏷️ İstatistikler
 
-![Marka Yönetimi] <img width="1917" height="730" alt="image" src="https://github.com/user-attachments/assets/c5e6fd09-9c06-48ed-b992-59424ebf4488" />
+ <img width="1917" height="730" alt="image" src="https://github.com/user-attachments/assets/c5e6fd09-9c06-48ed-b992-59424ebf4488" />
 
 
 ---
